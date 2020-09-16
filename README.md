@@ -12,3 +12,13 @@ Objetivos
 --> O sistema deve armazenar as informações coletadas de modo que possa servir estes dados em formato JSON
 
 --> Criar interfaces para visualização organizada das informações coletadas ( app mobile , interface web, app desktop, etc. )
+
+
+
+##Crawler 
+Para executar o atual crawler você precisa:
+1 - ter o node.js instalado na sua maquina
+2 - clone o repositorio 
+3 - rode o seguinte comando na pasta rais do crawler " npm install "
+
+Para executar rode o comando " npm start "
