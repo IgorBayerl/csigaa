@@ -10,6 +10,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "dotenv": "^8.2.0",
     "puppeteer": "^5.3.0",
     "readline-sync": "^1.4.10"
   }

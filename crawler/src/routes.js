@@ -1,6 +1,8 @@
 const puppeteer = require('puppeteer');
 const readlineSync = require('readline-sync');
 
+
+
 // OK  Fazer login no sigaa
 // OK coletar informações basicas do aluno ( nome, curso ...)
 // Limpar informações coletadas
@@ -15,17 +17,16 @@ async function crawlerTest() {
     const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.goto('https://sig.ifc.edu.br/sigaa/verTelaLogin.do');
-    // await page.screenshot({ path: 'example.png' });
 
-    const userLogin = readlineSync.question('Informe seu usuario : ') || 'igor_bayerl';
-    const userSenha = readlineSync.question('Informe a sua senha : ') || '10012001';
+    const userLogin = readlineSync.question('Informe seu usuario : ') ;
+    const userSenha = readlineSync.question('Informe a sua senha : ') ;
 
     const disciplina = 1
+
     //// Fazendo Login
     await login(page, userLogin, userSenha);
 
     await page.waitForNavigation();
-
 
 
     const name = await page.evaluate(() => {
@@ -40,24 +41,25 @@ async function crawlerTest() {
         return document.querySelector('#agenda-docente table tbody tr').innerText
     });
 
-
-    await clicandoNaDisciplina(page, disciplina)
-
-
-
-    // acessando pagina de notas
-    await page.evaluate(() => {
-        document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[2].click()
+    //// CONTANDO AS MATERIAS MATRICULADAS
+    const disciplinas = await page.evaluate(() => {
+        return document.getElementsByClassName('descricao').length
     });
 
-
-
+    
     console.log(`Bem vindo ${name}`)
     console.log(matricula)
-    console.log(panelBarCount)
+
+    for (let i = 0; i < disciplinas; i++) {
+        console.log(` disciplina ${i}`)
+        await entrandoNasPaginasColetandoInformacoes(page, i)
+        await page.waitForNavigation();
+    }
 
     // await browser.close();
 }
+
+
 
 async function login(page, userLogin, userSenha) {
 
@@ -69,9 +71,6 @@ async function login(page, userLogin, userSenha) {
 }
 
 
-// async function contaDisciplinasMatriculadas(){
-
-// }
 
 async function clicandoNaDisciplina(page, disciplina) {
     await page.evaluate((disciplina) => {
@@ -85,5 +84,23 @@ async function clicandoNaDisciplina(page, disciplina) {
     await page.waitForNavigation();
 }
 
+
+async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
+    
+    await clicandoNaDisciplina(page, disciplina)
+
+    // acessando pagina de notas
+    await page.evaluate(() => {
+        document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[2].click()
+    });
+
+    await page.waitForNavigation();
+    await page.goBack()
+
+    /// voltando pra home
+    await page.evaluate(() => {
+        document.getElementById('formAcoesTurma:botaoPortalDiscente').click()
+    })
+}
 
 crawlerTest()
