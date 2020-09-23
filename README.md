@@ -22,3 +22,11 @@ Para executar o atual crawler você precisa:
 - 3 - rode o seguinte comando na pasta rais do crawler " npm install "
 
 Para executar rode o comando " npm start "
+
+
+## App 
+ - Primeiro prototipo de app
+
+![Demo](img/gif.gif)
+
+
