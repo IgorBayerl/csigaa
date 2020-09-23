@@ -1,10 +1,11 @@
 const puppeteer = require('puppeteer');
 const readlineSync = require('readline-sync');
 const coletaNotas = require('./coletaNotas')
+const coletaPresenca = require('./coletaPresenca')
+const montaObjetoDisciplina = require('./montaObjetoDisciplina')
 
 
-
-async function crawlerTest() {
+async function crawler() {
 
     const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
@@ -13,6 +14,9 @@ async function crawlerTest() {
     const userLogin = readlineSync.question('Informe seu usuario : ') ;
     const userSenha = readlineSync.question('Informe a sua senha : ') ;
 
+    console.log('[1] - Para coletar de todas as disciplinas ') ;
+    console.log('[2] - para coletar de só uma disciplina ') ;
+    const option = readlineSync.question('Opcao : ...') ;
     //// Fazendo Login
     
     await login(page, userLogin, userSenha);
@@ -31,7 +35,13 @@ async function crawlerTest() {
     console.log(`Bem vindo ${dados.name}`)
     console.log(dados.matricula)
 
-    await paraCadaDisciplina(page , dados.quantidadeDeMaterias)
+    if (option == 1){
+        await paraCadaDisciplina(page , dados.quantidadeDeMaterias)
+    } else{
+        const CH = readlineSync.question(`Digite um numero de 0 a ${dados.quantidadeDeMaterias-1} ... `)
+        await entrandoNasPaginasColetandoInformacoes(page, CH)
+        await page.waitForNavigation();
+    }
     
     console.log('[ main ]: encerrando...')
     await browser.close();
@@ -73,37 +83,18 @@ async function clicandoNaDisciplina(page, disciplina) {
 async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     
     await clicandoNaDisciplina(page, disciplina)
-
-    // acessando pagina de notas
-    // console.log(`[acessando disciplina ${disciplina}]: acessando pagina de notas...`)
-    // await page.evaluate(() => {
-    //     document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[2].click()
-    // });
-
     
     const notas = await coletaNotas(page , disciplina)
 
-    /// acessando pagina presença
-    console.log(`[acessando disciplina ${disciplina}]: acessando pagina de presença...`)
-    await page.evaluate(() => {
-        document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[0].click()
-    });
-    await page.waitForNavigation();
-
+    const presenca = await coletaPresenca( page , disciplina )
     
-    const presencas = await page.evaluate(() => {
-        const linhasPar = document.getElementsByClassName('linhaPar').length
-        const linhasImpar = document.getElementsByClassName('linhaImpar').length
-        return{
-            quantidadeDeAulasRegistradas: linhasImpar + linhasPar,
-        }
-    })
-    console.log(`[ Presenca ] - [Aulas registradas]: ${presencas.quantidadeDeAulasRegistradas}`)
+    const noticias = []
 
+    montaObjetoDisciplina(disciplina , notas , presenca , noticias)
     /// voltando pra home
     await page.evaluate(() => {
         document.getElementById('formAcoesTurma:botaoPortalDiscente').click()
     })
 }
 
-crawlerTest()
+crawler()

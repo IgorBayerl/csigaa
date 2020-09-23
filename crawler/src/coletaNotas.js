@@ -25,7 +25,6 @@ async function coletaNotas ( page , disciplina ){
         }
 
         return{
-            linhaCima: linhaCima ,
             quantidadeDeNotas: comprimentoArray - 7,
             media: media,
             situacao: situacao,
@@ -34,9 +33,9 @@ async function coletaNotas ( page , disciplina ){
     })
     
     
-    console.log(`[ Boletim ] - [ Media ] : ${notas.media}`)
-    console.log(`[ Boletim ] - [ Situacao ] : ${notas.situacao}`)
-    console.log(`[ Boletim ] - [ Notas ] : ${JSON.stringify(notas.notas)}`)
+    // console.log(`[ Boletim ] - [ Media ] : ${notas.media}`)
+    // console.log(`[ Boletim ] - [ Situacao ] : ${notas.situacao}`)
+    // console.log(`[ Boletim ] - [ Notas ] : ${JSON.stringify(notas.notas)}`)
 
     await page.goBack()
     return notas
