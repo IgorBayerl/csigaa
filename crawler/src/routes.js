@@ -3,14 +3,6 @@ const readlineSync = require('readline-sync');
 const coletaNotas = require('./coletaNotas')
 
 
-// OK  Fazer login no sigaa
-// OK coletar informações basicas do aluno ( nome, curso ...)
-// Limpar informações coletadas
-// OK verificar as materias que o aluno está matriculado 
-// Extrair essas materias para um array de objetos com cada objeto sendo uma disciplina
-// celetar as notas de cada disciplina
-// coletar as informações de presença de cada disciplina
-// retornar um log com todas as informações coletadas
 
 async function crawlerTest() {
 
@@ -36,12 +28,6 @@ async function crawlerTest() {
         }
     });
 
-    //// CONTANDO AS MATERIAS MATRICULADAS
-    // const disciplinas = await page.evaluate(() => {
-    //     return document.getElementsByClassName('descricao').length
-    // });
-
-    
     console.log(`Bem vindo ${dados.name}`)
     console.log(dados.matricula)
 
@@ -89,13 +75,13 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     await clicandoNaDisciplina(page, disciplina)
 
     // acessando pagina de notas
-    console.log(`[acessando disciplina ${disciplina}]: acessando pagina de notas...`)
-    await page.evaluate(() => {
-        document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[2].click()
-    });
+    // console.log(`[acessando disciplina ${disciplina}]: acessando pagina de notas...`)
+    // await page.evaluate(() => {
+    //     document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[2].click()
+    // });
 
     
-    const notas = await coletaNotas(page)
+    const notas = await coletaNotas(page , disciplina)
 
     /// acessando pagina presença
     console.log(`[acessando disciplina ${disciplina}]: acessando pagina de presença...`)
@@ -104,6 +90,7 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     });
     await page.waitForNavigation();
 
+    
     const presencas = await page.evaluate(() => {
         const linhasPar = document.getElementsByClassName('linhaPar').length
         const linhasImpar = document.getElementsByClassName('linhaImpar').length

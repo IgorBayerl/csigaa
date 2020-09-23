@@ -1,6 +1,10 @@
 
 
-async function coletaNotas (page){
+async function coletaNotas ( page , disciplina ){
+    console.log(`[acessando disciplina ${disciplina}]: acessando pagina de notas...`)
+    await page.evaluate(() => {
+        document.getElementsByClassName('rich-panelbar rich-panelbar-interior ')[1].getElementsByClassName('itemMenu')[2].click()
+    });
 
     await page.waitForNavigation();
     const notas = await page.evaluate(() => {
