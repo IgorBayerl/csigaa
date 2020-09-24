@@ -1,4 +1,3 @@
-
 async function coletaDadosGerais(page){
     const dados = await page.evaluate(() => {
         const quantidadeDeMaterias = document.getElementsByClassName('descricao').length
