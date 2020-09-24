@@ -20,7 +20,8 @@ async function crawler() {
     //// Fazendo Login
     
     await login(page, userLogin, userSenha);
-    
+   
+
     await page.waitForNavigation();
 
     const dados = await coletaDadosGerais(page)
@@ -69,6 +70,7 @@ async function login(page, userLogin, userSenha) {
         document.getElementsByName('user.senha')[0].value = userSenha;
         document.forms[0].submit();
     }, { userLogin, userSenha });
+    
 }
 
 
