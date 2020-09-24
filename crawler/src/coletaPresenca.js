@@ -9,7 +9,7 @@ async function coletaPresenca ( page , disciplina ){
     await page.waitForNavigation();
 
     const presencas = await page.evaluate(() => {
-
+        
         const numberPattern = /\d+/g;
 
         const linhasPar = document.getElementsByClassName('linhaPar').length

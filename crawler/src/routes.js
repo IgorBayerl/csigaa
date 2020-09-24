@@ -3,7 +3,7 @@ const readlineSync = require('readline-sync');
 const coletaNotas = require('./coletaNotas')
 const coletaPresenca = require('./coletaPresenca')
 const montaObjetoDisciplina = require('./montaObjetoDisciplina')
-
+const coletaDadosGerais = require('./coletaDadosGerais')
 
 async function crawler() {
 
@@ -14,31 +14,32 @@ async function crawler() {
     const userLogin = readlineSync.question('Informe seu usuario : ') ;
     const userSenha = readlineSync.question('Informe a sua senha : ') ;
 
-    console.log('[1] - Para coletar de todas as disciplinas ') ;
-    console.log('[2] - para coletar de só uma disciplina ') ;
-    const option = readlineSync.question('Opcao : ...') ;
     //// Fazendo Login
     
     await login(page, userLogin, userSenha);
-
+    
     await page.waitForNavigation();
 
-    const dados = await page.evaluate(() => {
-        return {
-            name : document.querySelector('.usuario span').title.trim(),
-            matricula : document.querySelector('#agenda-docente table tbody tr').innerText.trim(),
-            unidade : document.querySelector('.unidade').textContent.trim(),
-            quantidadeDeMaterias : document.getElementsByClassName('descricao').length,
-        }
-    });
+    const dados = await coletaDadosGerais(page)
+    
 
     console.log(`Bem vindo ${dados.name}`)
     console.log(dados.matricula)
 
+    
+    console.log('[1] - Para coletar de todas as disciplinas ') ;
+    console.log('[2] - para coletar de só uma disciplina ') ;
+    const option = readlineSync.question('Opcao : ...') ;
+
+
     if (option == 1){
-        await paraCadaDisciplina(page , dados.quantidadeDeMaterias)
+        await paraCadaDisciplina(page , dados)
     } else{
-        const CH = readlineSync.question(`Digite um numero de 0 a ${dados.quantidadeDeMaterias-1} ... `)
+        for (let i = 0; i < dados.array_materias.length; i++) {
+            console.log(`-> [${i}] - ${dados.array_materias[i]}:`)
+        }
+        console.log('====================================')
+        const CH = readlineSync.question(`Digite um numero de 0 a ${dados.quantidadeDeMaterias-1} : `)
         await entrandoNasPaginasColetandoInformacoes(page, CH)
         await page.waitForNavigation();
     }
@@ -48,11 +49,14 @@ async function crawler() {
 }
 
 async function paraCadaDisciplina(page , disciplinas){
-    for (let i = 0; i < disciplinas; i++) {
-        console.log(`- Disciplina ${i}`)
-        await entrandoNasPaginasColetandoInformacoes(page, i)
+    let objGeral = []
+    for (let i = 0; i < disciplinas.quantidadeDeMaterias; i++) {
+        console.log(`- ${disciplinas.array_materias[i]}`)
+        const obj = await entrandoNasPaginasColetandoInformacoes(page, i)
+        objGeral.push(obj)
         await page.waitForNavigation();
     }
+    console.log(objGeral)
 }
 
 async function login(page, userLogin, userSenha) {
@@ -90,11 +94,12 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     
     const noticias = []
 
-    montaObjetoDisciplina(disciplina , notas , presenca , noticias)
+    const objDisciplina = await montaObjetoDisciplina(disciplina , notas , presenca , noticias)
     /// voltando pra home
     await page.evaluate(() => {
         document.getElementById('formAcoesTurma:botaoPortalDiscente').click()
     })
+    return objDisciplina
 }
 
 crawler()
