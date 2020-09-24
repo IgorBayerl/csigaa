@@ -5,6 +5,9 @@ const coletaPresenca = require('./coletaPresenca')
 const montaObjetoDisciplina = require('./montaObjetoDisciplina')
 const coletaDadosGerais = require('./coletaDadosGerais')
 
+
+
+
 async function crawler() {
 
     const browser = await puppeteer.launch({ headless: true });
@@ -29,7 +32,7 @@ async function crawler() {
     
     console.log('[1] - Para coletar de todas as disciplinas ') ;
     console.log('[2] - para coletar de só uma disciplina ') ;
-    const option = readlineSync.question('Opcao : ...') ;
+    const option = readlineSync.question('Opcao : ... ') ;
 
 
     if (option == 1){
@@ -40,7 +43,7 @@ async function crawler() {
         }
         console.log('====================================')
         const CH = readlineSync.question(`Digite um numero de 0 a ${dados.quantidadeDeMaterias-1} : `)
-        await entrandoNasPaginasColetandoInformacoes(page, CH)
+        const obj = await entrandoNasPaginasColetandoInformacoes(page, CH)
         await page.waitForNavigation();
     }
     
