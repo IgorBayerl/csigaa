@@ -14,7 +14,7 @@ async function coletaDadosGerais(page){
 
         return {
             name : document.querySelector('.usuario span').title.trim(),
-            matricula : document.querySelector('#agenda-docente table tbody tr').innerText.trim(),
+            matricula : document.querySelector('#agenda-docente table tbody tr').innerText.match( /\d+/g ),
             unidade : document.querySelector('.unidade').textContent.trim(),
             quantidadeDeMaterias : quantidadeDeMaterias ,
             array_materias: array_materias,

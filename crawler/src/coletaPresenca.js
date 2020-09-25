@@ -10,11 +10,10 @@ async function coletaPresenca ( page , disciplina ){
 
     const presencas = await page.evaluate(() => {
         
-        const numberPattern = /\d+/g;
 
         const linhasPar = document.getElementsByClassName('linhaPar').length
         const linhasImpar = document.getElementsByClassName('linhaImpar').length
-        const allBottonText = document.querySelector('.botoes-show').innerText.match( numberPattern )
+        const allBottonText = document.querySelector('.botoes-show').innerText.match( /\d+/g )
 
         return{
             quantidadeDeLinhas: linhasImpar + linhasPar,
