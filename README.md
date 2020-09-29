@@ -14,6 +14,9 @@ Então estou lançando este repositorio para que possamos melhorar a experiencia
 - Criar interfaces para visualização organizada das informações coletadas ( app mobile , interface web, app desktop, etc. )
 
 
+## Visão geral
+![Demo2](img/test.png)
+
 
 ## Crawler 
 Para executar o atual crawler você precisa:
