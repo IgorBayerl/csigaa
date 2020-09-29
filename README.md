@@ -33,3 +33,11 @@ Para executar rode o comando " npm start "
 ![Demo](img/gif.gif)
 
 
+## Contribuições
+Todo tipo de contribuição é bem vinda.
+- pull requests
+- correção de bugs
+- testes
+- ideias de funcionalidades
+- ideias de design para o front end ( pagina web ou aplicativo mobile )
+- opiniões
