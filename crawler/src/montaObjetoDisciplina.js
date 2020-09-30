@@ -8,7 +8,6 @@ async function montandoObjetoDisciplina(id , notas , presenca , noticias){
         presenca: presenca,
         noticias: noticias
     }
-    console.log(JSON.stringify(info))
     return info
 }
 

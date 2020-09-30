@@ -50,7 +50,7 @@ async function openBrowser(){
 async function paraCadaDisciplina(page , disciplinas){
     let objGeral = []
     for (let i = 0; i < disciplinas.quantidadeDeMaterias; i++) {
-        console.log(`- ${disciplinas.array_materias[i]}`)
+        // console.log(`- ${disciplinas.array_materias[i]}`)
         const obj = await entrandoNasPaginasColetandoInformacoes(page, i)
         objGeral.push(obj)
         await page.waitForNavigation();

@@ -2,24 +2,78 @@ const crawler = require('./routes')
 const express = require('express')
 const app = express()
 const port = 3000
-const bodyParser = require('body-parser');
+const connection = require('./database/connection')
+const crypto = require('crypto')
+const { response } = require('express')
 
 app.use(express.json())
 
-let resposta = []
 
-app.get('/aluno', async (req, res) => {
-    const creators = ['test','test1','test2']
-    res.json(resposta)
+app.post('/access', async (req, res) => {
+
+    const {userName , userPassword} = req.body
+    let studantData
+    await connection.select('*').where({name: userName}).where({password: userPassword}).table('studants').first().then(data => {
+        console.log(data)
+        studantData = data
+    }).catch(err =>{
+        console.log(err)
+    })
+    res.json(studantData)
+    
 })
 
-app.post('/aluno', async (req, res) => {
+app.post('/create', async (req, res) => {
     const body = req.body
     console.log(body)
-    res.send('test ok');
-    resposta = await crawler.crawler(body.userName, body.userPassword)
+    // res.send({response:'test ok'});
+
+    const name = body.userName
+    const password = body.userPassword
+
+    
+
+    let resposta
+    await connection.select('*').where({name: name}).table('studants').then(data => {
+        resposta = data
+        if (resposta.length != 0){
+            console.log('usuario ja existe !!!!')
+            res.send({response:'Usuario ja existe'});
+            // async() => {
+            //     await connection.select('*').where({password: password}).table('studants').then(data => {
+            //         console.log(data)
+            //         studantData = data
+            //     }).catch(err =>{
+            //         console.log(err)
+            //     })
+            // }
+            
+        }else{
+            res.send({response:'Criando usuario'});
+            async function cawlerDB(){
+                const info = JSON.stringify(await crawler.crawler(name, password))
+                const accessKey = crypto.randomBytes(6).toString('HEX')
+                try {
+                    await connection('studants').insert({
+                        accessKey,
+                        name,
+                        password,
+                        info,
+                    })
+                } catch (error) {
+                    console.log('error: '+ error)
+                }
+            }
+            cawlerDB()
+            
+        }
+    }).catch(err =>{
+        console.log(err)
+    })
+
 })
 
-app.listen(port, () => console.log(`Example app listening on port ${port}!`))
+app.listen(port, () => console.log(`CSIGAA api listening on port ${port}!`))
+
 
 
