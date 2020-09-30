@@ -8,16 +8,15 @@ const login = require('./login')
 
 
 
-async function crawler() {
+async function crawler(userLogin, userSenha) {
 
 
     const init = await openBrowser()
     const page = init.page
     const browser = init.browser
     
-    
-    const userLogin = readlineSync.question('Informe seu usuario : ') ;
-    const userSenha = readlineSync.question('Informe a sua senha : ') ;
+    // const userLogin = readlineSync.question('Informe seu usuario : ') ;
+    // const userSenha = readlineSync.question('Informe a sua senha : ') ;
 
     //// Fazendo Login
     
@@ -30,24 +29,12 @@ async function crawler() {
     console.log(`Bem vindo ${dados.name}`)
     console.log(dados.matricula)
     
-    console.log('[1] - Para coletar de todas as disciplinas ') ;
-    console.log('[2] - para coletar de só uma disciplina ') ;
-    const option = readlineSync.question('Opcao : ... ') ;
-
-    if (option == 1){
-        await paraCadaDisciplina(page , dados)
-    } else{
-        for (let i = 0; i < dados.array_materias.length; i++) {
-            console.log(`-> [${i}] - ${dados.array_materias[i]}:`)
-        }
-        console.log('====================================')
-        const CH = readlineSync.question(`Digite um numero de 0 a ${dados.quantidadeDeMaterias-1} : `)
-        const obj = await entrandoNasPaginasColetandoInformacoes(page, CH)
-        await page.waitForNavigation();
-    }
+    const objGeral = await paraCadaDisciplina(page , dados)
     
     console.log('[ main ]: encerrando...')
     await browser.close();
+
+    return objGeral
 }
 
 async function openBrowser(){
@@ -68,9 +55,9 @@ async function paraCadaDisciplina(page , disciplinas){
         objGeral.push(obj)
         await page.waitForNavigation();
     }
-    console.log(JSON.stringify(objGeral))
+    // console.log(JSON.stringify(objGeral))
+    return objGeral
 }
-
 
 async function clicandoNaDisciplina(page, disciplina) {
     await page.evaluate((disciplina) => {
@@ -83,7 +70,6 @@ async function clicandoNaDisciplina(page, disciplina) {
 
     await page.waitForNavigation();
 }
-
 
 
 async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
@@ -105,4 +91,8 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     return objDisciplina
 }
 
-crawler()
+// crawler()
+
+module.exports = {
+    crawler
+}

@@ -39,7 +39,6 @@ async function coletaPresenca ( page , disciplina ){
             arrayDePresencas : arrayDePresencas
         }
     })
-    console.log('array de presencas : '+ presencas.arrayDePresencas)
     return presencas
 }
 
