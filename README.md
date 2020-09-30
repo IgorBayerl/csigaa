@@ -14,6 +14,9 @@ Então estou lançando este repositorio para que possamos melhorar a experiencia
 - Criar interfaces para visualização organizada das informações coletadas ( app mobile , interface web, app desktop, etc. )
 
 
+## Visão geral
+![Demo2](img/test.png)
+
 
 ## Crawler 
 Para executar o atual crawler você precisa:
@@ -30,3 +33,11 @@ Para executar rode o comando " npm start "
 ![Demo](img/gif.gif)
 
 
+## Contribuições
+Todo tipo de contribuição é bem vinda.
+- pull requests
+- correção de bugs
+- testes
+- ideias de funcionalidades
+- ideias de design para o front end ( pagina web ou aplicativo mobile )
+- opiniões
