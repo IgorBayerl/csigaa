@@ -61,7 +61,7 @@ async function paraCadaDisciplina(page , disciplinas){
 
 async function clicandoNaDisciplina(page, disciplina) {
     await page.evaluate((disciplina) => {
-        if (disciplina != 0) {
+        if (disciplina != 0) { 
             document.querySelector(`#form_acessarTurmaVirtualj_id_${disciplina} a`).click();
         } else {
             document.querySelector(`#form_acessarTurmaVirtual a`).click();
