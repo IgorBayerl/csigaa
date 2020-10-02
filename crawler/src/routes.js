@@ -76,12 +76,13 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     // entrando na pagina da disciplina
     await clicandoNaDisciplina(page, disciplina)
     
+    name = 'nomeDaMateria'
     const presenca = await coletaPresenca( page , disciplina )
     const notas = await coletaNotas(page , disciplina)
     const noticias = []
 
     // Montando objeto
-    const objDisciplina = await montaObjetoDisciplina(disciplina , notas , presenca , noticias)
+    const objDisciplina = await montaObjetoDisciplina(disciplina , notas , presenca , noticias, name)
 
     /// voltando pra home
     await page.evaluate(() => {

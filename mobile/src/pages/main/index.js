@@ -36,8 +36,13 @@ export default function Main() {
   const [update, setUpdate] = useState(false);
 
   const { navigate } = useNavigation()
-  function navigateToOtherpage(){
-      navigate('PosSplash')
+
+  function navigateToOtherpage(userName , userPassword){
+    const userInfo = {
+      name: userName,
+      password: userPassword
+    }
+    navigate('PosSplash',{ userInfo })
   }
 
   useEffect(() => {
@@ -133,7 +138,7 @@ export default function Main() {
             <View style={styles.cardContainer}>
               <TouchableOpacity
                 style={styles.card}
-                onPress={ () => navigateToOtherpage() }
+                onPress={ () => navigateToOtherpage(item.userName , item.userPassword) }
               >
                 <Text style={styles.userNameTitle}>
                   {item.userName}
