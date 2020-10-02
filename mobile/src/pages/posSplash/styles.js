@@ -21,6 +21,11 @@ export default StyleSheet.create({
       alignItems: 'center',
       paddingTop: 22
     },
+  subContainer: {
+      flex: 1,
+      paddingTop: 10,
+      width: '100%'
+    },
   title:{
       fontWeight: 'bold',
       color: '#FFF',
@@ -71,5 +76,37 @@ export default StyleSheet.create({
     color: '#FFF',
     fontSize: 28,
   },
+  cardContainerTop:{
+    backgroundColor: theme.color_card,
+    // flex: 1,
+    height: 100,
+    margin: 5,
+    width: '100%',
+  },
+  cardContainerBottom:{
+    backgroundColor: theme.color_card,
+    flex: 1,
+    height: 100,
+    margin: 5,
+    width: '100%',
+  },
+  cardContainerSmall:{
+    backgroundColor: theme.color_card,
+    flex: 1,
+    margin: 5,
+    height: 150
+  },
+  floatingButton:{
+    position: 'absolute',
+    backgroundColor: '#40A9D6',
+    height: 80,
+    width: 80,
+    borderRadius: 40,
+    right: 30,
+    bottom: 50,
+    alignItems: 'center',
+    justifyContent: 'center',
+
+  }
   
 });

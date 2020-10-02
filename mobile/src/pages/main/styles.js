@@ -35,13 +35,14 @@ export default StyleSheet.create({
       alignItems: 'center'
     },
   usersList:{
-    width: '90%',
+    width: '100%',
   },
   cardContainer:{
-    height: 80,
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop: 10
+    width: '100%',
+    marginTop: 10,
+    paddingHorizontal: 20
   },
   card:{
     backgroundColor: theme.color_card,
@@ -52,9 +53,20 @@ export default StyleSheet.create({
     marginTop: 10,
     width:'100%'
   },
+  lastCard:{
+    backgroundColor: theme.color_card,
+    height: 180,
+    borderRadius: 5,
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 10,
+    width:'100%',
+    flexDirection: 'row',
+    // paddingHorizontal: 40
+  },
   modalContainer:{
     // backgroundColor: 'blue',
-    flex: 1,
+    // flex: 1,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -84,12 +96,24 @@ export default StyleSheet.create({
     alignItems: 'center'
   },
   textInput:{
-    backgroundColor:'#63808f',
+    // backgroundColor:'#63808f',
     width: '100%',
-    height: 40,
+    height: '40%',
     color: '#d3e0e6',
     fontWeight: "700",
-    textAlign: "center"
+    fontSize: 26
+  },
+  textInputContainer:{
+    width: '80%',
+    // backgroundColor: 'blue',
+    paddingLeft: 30
+  },
+  okButton:{
+    alignItems: 'center',
+    width: '20%', 
+    height: '100%', 
+    justifyContent: 'center', 
+    paddingRight: 20
   }
   
   

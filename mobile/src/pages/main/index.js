@@ -5,48 +5,87 @@ import { Text,
    TouchableOpacity,
    FlatList,
    Alert,
-   Modal,
-   TextInput 
+   TextInput ,
+   Platform,
+   AsyncStorage
   } from 'react-native';
 import { RectButton } from 'react-native-gesture-handler'
 import styles from './styles'
-import Animated, {
-  useSharedValue,
-  useAnimatedStyle,
-  withTiming,
-  Easing,
-  interpolate,
-  Extrapolate,
-  sequence,
-} from 'react-native-reanimated';
+
 import { useNavigation } from '@react-navigation/native';
-import { bounce } from 'react-native/Libraries/Animated/src/Easing';
-import { AntDesign } from '@expo/vector-icons';
+import { Feather } from '@expo/vector-icons';
+import Swipeable from 'react-native-gesture-handler/Swipeable';
 
-// let Modal;
-
-// if (Platform.OS !== 'web') {
-//   Modal = require('react-native').Modal;
-// } else {
-//   Modal = require('./WebModal').default;
-// }
 
 
 export default function Main() {
 
-  const [modalVisible, setModalVisible] = useState(false);
-  const { navigate } = useNavigation()
+  function LeftActions({item}) {
+    return (
+        <TouchableOpacity 
+          onPress={()=> deleteUser(item)}
+          style={{ alignItems: 'center', justifyContent: 'center', marginLeft: 30, marginTop:20 }}
+        >
+            <Feather name="x" size={35} color="#adc2cc" />
+        </TouchableOpacity>
+    );
+  }
 
+  const [userName, setUserName] = useState('');
+  const [userPassword, setUserPassword] = useState('');
+  const [update, setUpdate] = useState(false);
+
+  const { navigate } = useNavigation()
   function navigateToOtherpage(){
       navigate('PosSplash')
   }
 
   useEffect(() => {
-      
+    loadData()
   }, []);
-     
-    
+  
+  const [contas, setContas] = useState([]);   
 
+  async function loadData(){
+    setContas(JSON.parse(await AsyncStorage.getItem('@SCIGAA_acounts')))
+  }
+
+  async function deleteUser(index){
+    contas.splice(index, 1)
+    setUpdate(!update)
+    try {
+      await AsyncStorage.setItem('@SCIGAA_acounts', JSON.stringify(contas))
+      console.log('removido')
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+
+  async function addButtonPressed(){
+    let tempContas = contas
+    if(userName != '' && userPassword != ''){
+      const adicionar = {
+        userName: userName,
+        userPassword: userPassword
+      }
+      tempContas.push(adicionar)
+      setContas(tempContas)
+      setUserName('')
+      setUserPassword('')
+      setUpdate(!update)
+      try {
+        await AsyncStorage.setItem('@SCIGAA_acounts', JSON.stringify(contas))
+        console.log('adicionado')
+      } catch (e) {
+        console.log(e)
+      }
+
+    }else{
+      alert('preencha o nome de usuário e a sua senha do sigaa!')
+    }
+  }
+  
   return (
     <View style={styles.container}>
       <View>
@@ -54,75 +93,57 @@ export default function Main() {
           CSIGAA
         </Text>
       </View>
-      <FlatList
-        data={[1,2]}
-        style={styles.usersList}
-        keyExtractor={item => String(item)}
-        ListFooterComponent={()=>(
-          <View style={styles.cardContainer}>
-            <TouchableOpacity
-              style={[styles.card, {opacity: 0.7}]}
-              onPress={ () => setModalVisible(!modalVisible) }
-            >
-              <AntDesign name="pluscircleo" size={35} color="white" />
-            </TouchableOpacity>
-          </View>
-        )}
-        renderItem={({ item: item }) => (
-          <View style={styles.cardContainer}>
-            <TouchableOpacity
-              style={styles.card}
-              onPress={ () => navigateToOtherpage() }
-            >
-              <Text style={styles.userNameTitle}>
-                igor_bayerl
-              </Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      />
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          setModalVisible(!modalVisible);
-        }}>
-        <View style={styles.modalContainer}>
-          <View style={styles.addCardModal}>
-            <Text >Faça login no sigaa</Text>
+      <View style={styles.cardContainer}>
+        <View style={[styles.lastCard, {opacity: 0.7}]} >
+          <View style={styles.textInputContainer}>
             <TextInput
               style={styles.textInput}
               placeholder={'Usuario'}
               placeholderTextColor={'#adc2cc'}
-              color
+              onChangeText={text => setUserName(text)}
+              value={userName}
             />
             <TextInput
               style={styles.textInput}
               placeholder={'Senha'}
               placeholderTextColor={'#adc2cc'}
+              onChangeText={text => setUserPassword(text)}
+              value={userPassword}
             />
-            <View style={styles.modalButtonsContainer}>
+          </View>
+          
+          <TouchableOpacity
+            style={styles.okButton}
+            onPress={() => addButtonPressed() }
+          >
+              <Feather name="check" size={35} color="#adc2cc" />
+          </TouchableOpacity>
+          {/* <AntDesign name="pluscircleo" size={35} color="white" /> */}
+        </View>
+      </View>
+      <FlatList
+        data={contas}
+        extraData={update}
+        style={styles.usersList}
+        keyExtractor={item => String(item.userName)}
+        renderItem={({ item: item , index: index}) => (
+          <Swipeable
+            renderLeftActions={() => <LeftActions item={index} />}
+          >
+            <View style={styles.cardContainer}>
               <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-                style={styles.modalButton}
+                style={styles.card}
+                onPress={ () => navigateToOtherpage() }
               >
-                <Text style={styles.textStyle}>Cancelar</Text>
-              </TouchableOpacity>
-              <TouchableOpacity
-                onPress={() => {
-                  setModalVisible(!modalVisible);
-                }}
-                style={styles.modalButton}
-              >
-                <Text style={styles.textStyle}>Adicionar</Text>
+                <Text style={styles.userNameTitle}>
+                  {item.userName}
+                </Text>
               </TouchableOpacity>
             </View>
-          </View>
-        </View>
-      </Modal>
+          </Swipeable>
+          
+        )}
+      />
       <StatusBar style="light" />
     </View>
   );
