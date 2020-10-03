@@ -29,6 +29,12 @@ Para executar rode o comando " npm start "
 
 ## App 
  - Primeiro prototipo de app
+ 
+ - Algumas funcionalidades do app
+ - [x] ver notas
+ - [x] ver presença
+ - [ ] ver atividades pendentes
+ - [ ] ver notícias
 
 ![Demo](img/gif.gif)
 
