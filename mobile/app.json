@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "Reanimated2",
-    "slug": "Reanimated2",
+    "name": "CSIGAA",
+    "slug": "CSIGAA",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -24,6 +24,9 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "android": {
+      "package": "com.scigaa"
     }
   }
 }

@@ -74,7 +74,10 @@ export default function Main() {
         userName: userName,
         userPassword: userPassword
       }
-      tempContas.push(adicionar)
+      tempContas.push({
+        userName: userName,
+        userPassword: userPassword
+      })
       setContas(tempContas)
       setUserName('')
       setUserPassword('')

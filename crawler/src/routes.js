@@ -15,11 +15,6 @@ async function crawler(userLogin, userSenha) {
     const page = init.page
     const browser = init.browser
     
-    // const userLogin = readlineSync.question('Informe seu usuario : ') ;
-    // const userSenha = readlineSync.question('Informe a sua senha : ') ;
-
-    //// Fazendo Login
-    
     await login(page, userLogin, userSenha);
    
     await page.waitForNavigation();
@@ -50,12 +45,10 @@ async function openBrowser(){
 async function paraCadaDisciplina(page , disciplinas){
     let objGeral = []
     for (let i = 0; i < disciplinas.quantidadeDeMaterias; i++) {
-        // console.log(`- ${disciplinas.array_materias[i]}`)
         const obj = await entrandoNasPaginasColetandoInformacoes(page, i)
         objGeral.push(obj)
         await page.waitForNavigation();
     }
-    // console.log(JSON.stringify(objGeral))
     return objGeral
 }
 
@@ -91,8 +84,6 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
 
     return objDisciplina
 }
-
-// crawler()
 
 module.exports = {
     crawler
