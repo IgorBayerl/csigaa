@@ -68,7 +68,13 @@ export default function Main() {
 
 
   async function addButtonPressed(){
-    let tempContas = contas
+    let tempContas
+    if (contas != null){
+      tempContas = contas
+    }else{
+      tempContas = []
+    }
+
     if(userName != '' && userPassword != ''){
       const adicionar = {
         userName: userName,
@@ -139,6 +145,7 @@ export default function Main() {
             renderLeftActions={() => <LeftActions item={index} />}
           >
             <View style={styles.cardContainer}>
+              
               <TouchableOpacity
                 style={styles.card}
                 onPress={ () => navigateToOtherpage(item.userName , item.userPassword) }

@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
 
 ///// temas
 const themeDark = {
@@ -19,12 +20,14 @@ export default StyleSheet.create({
       backgroundColor: theme.background,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingTop: 22
+      paddingTop: Constants.statusBarHeight+5
     },
   subContainer: {
       flex: 1,
       paddingTop: 10,
-      width: '100%'
+      width: '100%',
+      alignItems: 'center',
+      paddingHorizontal: 10
     },
   title:{
       fontWeight: 'bold',
@@ -79,22 +82,28 @@ export default StyleSheet.create({
   cardContainerTop:{
     backgroundColor: theme.color_card,
     // flex: 1,
-    height: 100,
-    margin: 5,
+    height: 140,
+    margin: 10,
+    borderRadius: 5,
     width: '100%',
   },
   cardContainerBottom:{
     backgroundColor: theme.color_card,
     flex: 1,
     height: 100,
-    margin: 5,
+    margin: 10,
+    borderRadius: 5,
     width: '100%',
   },
   cardContainerSmall:{
     backgroundColor: theme.color_card,
-    flex: 1,
-    margin: 5,
-    height: 150
+    // flex: 1,
+    width: '49%',
+    // margin: 10,
+    borderRadius: 5,
+    height: 100,
+    alignItems: 'center',
+    justifyContent: 'space-evenly'
   },
   floatingButton:{
     position: 'absolute',
@@ -107,6 +116,47 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
 
+  },
+  atividadesContainer:{
+    // backgroundColor: '#de2424',
+    flex: 1,
+    // paddingHorizontal: 5
+  },
+  atividadesList:{
+    // backgroundColor: '#de2424',
+    borderRadius: 5,
+    paddingHorizontal: 10
+  },
+  atividadesItemContainer:{
+    // backgroundColor: '#de2424',
+    flexDirection: 'row', 
+    // justifyContent: 'space-between',
+    height: 50,
+    marginVertical: 5,
+    alignItems: 'center'
+  },
+  atividadesItem_nomeAtividade: {
+    fontWeight: "bold",
+    // backgroundColor: '#de2424',
+    width: '65%'
+  },
+  contentText:{
+    color: 'white',
+    fontSize: 15
+  },
+  atividadesItem_abreviacaoMateria:{
+    // backgroundColor: 'blue',
+    width: '10%'
+  },
+  atividadesItem_estado:{
+    
+    // backgroundColor: '#de2424',
+    width: '10%'
+  },
+  atividadesItem_datadeentrega:{
+    
+    // backgroundColor: 'blue',
+    width: '15%'
   }
   
 });

@@ -1,6 +1,12 @@
 import React , {useEffect, useState} from 'react';
 import { StatusBar } from 'expo-status-bar';
-import { Text, View, TouchableOpacity } from 'react-native';
+import { 
+  Text, 
+  View, 
+  TouchableOpacity ,
+  Dimensions,
+  ScrollView
+} from 'react-native';
 import { useRoute, useNavigation } from '@react-navigation/native'
 import styles from './styles'
 import Animated, {
@@ -15,7 +21,11 @@ import Animated, {
 import { AntDesign,FontAwesome5 } from '@expo/vector-icons';
 // import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import api from '../../services/api'
+import { FlatList } from 'react-native-gesture-handler';
 export default function PosSplash() {
+
+  const screenWidth = Dimensions.get('window').width-20
+  const screenHeight = Dimensions.get('window').height
 
   const route = useRoute()
 
@@ -53,14 +63,14 @@ export default function PosSplash() {
 
   
   async function loadData(){
-    const response = await api.post('access', {
-      userName:user.name,
-      userPassword:user.password
-    })
-    // console.log(JSON.parse(response.data.info))
-    console.log('[ Carregando informações do aluno ] ...')
+    // const response = await api.post('access', {
+    //   userName:user.name,
+    //   userPassword:user.password
+    // })
+    // // console.log(JSON.parse(response.data.info))
+    // console.log('[ Carregando informações do aluno ] ...')
 
-    setData(JSON.parse(response.data.info))
+    // setData(JSON.parse(response.data.info))
   }
  
   async function makeArrayNotas(){
@@ -97,29 +107,80 @@ export default function PosSplash() {
       </Text>
       <View style={styles.subContainer}>
         <View style={styles.cardContainerTop}>
-          <Text style={styles.title}>Noticias</Text>
+          <ScrollView
+            horizontal={true}
+            pagingEnabled={true}
+            
+          >
+            <View 
+              style={{
+                width : screenWidth,
+                paddingHorizontal: 10
+              }}
+            >
+              <Text style={styles.title}>Nome da materia</Text>
+              <Text style={styles.contentText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</Text>
+            </View>
+            <View 
+              style={{
+                width : screenWidth,
+                paddingHorizontal: 10
+              }}
+            >
+              <Text style={styles.title}>Noticias</Text>
+              <Text style={styles.contentText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</Text>
+            </View>
+            
+      
+
+          </ScrollView>
         </View>
-        <View style={{flexDirection: 'row'}}>
+        <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
           <TouchableOpacity 
             onPress={() => navigateToOtherpage()}
             style={styles.cardContainerSmall}
           >
             <Text style={styles.title}>Notas </Text>
-            <FontAwesome5 name="calendar-alt" size={80 } color="white" />
+            {/* <FontAwesome5 name="calendar-alt" size={40 } color="white" /> */}
           </TouchableOpacity>
           <TouchableOpacity 
             onPress={() => navigateToPresencas()}
             style={styles.cardContainerSmall}
           >
             <Text style={styles.title}>Presenças</Text>
-            <FontAwesome5 name="calendar-alt" size={80 } color="white" />
+            {/* <FontAwesome5 name="calendar-alt" size={40 } color="white" /> */}
           </TouchableOpacity>
         </View>
         <View style={styles.cardContainerBottom}>
-          <Text style={styles.title}>Atividades</Text>
+          {/* <Text style={styles.title}>Atividades pendentes</Text> */}
+          
+          <View style={styles.atividadesContainer}>
+            <FlatList
+              data={[1,2,3,4,5,6,7,8,9,10]}
+              showsVerticalScrollIndicator={false}
+              style={styles.atividadesList}
+              keyExtractor={item => String(item)}
+              renderItem={({ item: item , index: index}) => (
+                <View style={styles.atividadesItemContainer}>
+                  <Text style={[styles.contentText,styles.atividadesItem_abreviacaoMateria]}>
+                    C1
+                  </Text>
+                  <Text style={[styles.contentText,styles.atividadesItem_nomeAtividade]}>
+                    Atividade teste
+                  </Text>
+                  <Text style={[styles.contentText,styles.atividadesItem_datadeentrega]}>
+                    22/10
+                  </Text>
+                  <Text style={[styles.contentText,styles.atividadesItem_estado]}>
+                    <AntDesign name="checkcircle" size={23} color="white" />
+                  </Text>
+                </View>
+              )}
+            />
+          </View>
         </View>
       </View>
-      <ButtonReloadInfo onPress={update()}/>
+      {/* <ButtonReloadInfo onPress={update()}/> */}
       <StatusBar style="light" />
       
     </View>

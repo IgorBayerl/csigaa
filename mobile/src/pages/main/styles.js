@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native';
+import Constants from 'expo-constants';
 
 ///// temas
 const themeDark = {
@@ -19,7 +20,7 @@ export default StyleSheet.create({
       backgroundColor: theme.background,
       justifyContent: 'center',
       alignItems: 'center',
-      paddingTop: 22
+      paddingTop: Constants.statusBarHeight+5
     },
   title:{
       fontWeight: 'bold',
