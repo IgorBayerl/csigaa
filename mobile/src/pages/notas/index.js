@@ -17,6 +17,7 @@ import Animated, {
   Extrapolate,
   sequence,
 } from 'react-native-reanimated';
+import{ RectButton } from 'react-native-gesture-handler'
 import { AntDesign } from '@expo/vector-icons';
 // import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import api from '../../services/api'
@@ -25,62 +26,20 @@ export default function Notas() {
 
   const route = useRoute()
 
-  // const notas = route.params.notas
-
-  let notas = [
-    
-    {
-      id: 1,
-      name: 'calculo',
-      selected: true,
-      notas:{
-        media: 7.5,
-        notas: [
-          {
-            name: 'P1',
-            nota: 8 
-          },
-          {
-            name: 'T1',
-            nota: 7 
-          }
-        ]
-      }
-    },
-    {
-      id: 2,
-      name: 'engenharia de software',
-      selected: false,
-      notas:{
-        media: 8.5,
-        notas: [
-          {
-            name: 'P1',
-            nota: 8 
-          },
-          {
-            name: 'T1',
-            nota: 9 
-          }
-        ]
-      }
-      
-    }
-  ]
+  const notas = route.params.notas
 
   const [arrayNotas , setArrayNotas] = useState(notas)
 
   const [update , setUpdate] = useState([])
 
   useEffect(() => {
-    console.log(notas)
+    // console.log(notas)
   }, []);
      
   function expandOrContractList(item){
-    console.log('alooooo ' + item.name)
     const idItem = item.id
     let tempArrayNotas = arrayNotas
-    tempArrayNotas[idItem -1].selected = !arrayNotas[idItem -1].selected
+    tempArrayNotas[idItem ].selected = !arrayNotas[idItem].selected
     setArrayNotas(tempArrayNotas)
 
     setUpdate(!update)
@@ -102,27 +61,36 @@ export default function Notas() {
           keyExtractor={item => String(item.id)}
           renderItem={({ item: item , index: index}) => (
             <View style={styles.cardContainer}>
-              <TouchableOpacity
+              <RectButton
                 style={styles.card}
                 onPress={ () => expandOrContractList(item) }
               >
                 <Text style={styles.userNameTitle}>
                   {item.name}
                 </Text>
-              </TouchableOpacity>
+              </RectButton>
               {item.selected ? 
                 <View style={styles.detalhes}>
                 {/* <Text style={styles.userNameTitle}>
                   Media : {item.notas.media}
                 </Text> */}
-                  <View style={styles.cardDetailContainer}>
-                    <Text style={styles.userNameTitle}>
-                      {`Media: ${item.notas.media}`}
-                    </Text>
-                    <Text style={styles.userNameTitle}>
-                      {item.notas.situacao}
-                    </Text>
-                  </View>
+                  {item.notas.notas == [] ? 
+                    <View style={styles.cardDetailContainer}>
+                      <Text style={styles.userNameTitle}>
+                        {`Media: ${item.notas.media}`}
+                      </Text>
+                      <Text style={styles.userNameTitle}>
+                        {item.notas.situacao}
+                      </Text>
+                    </View>
+                  :
+                    <View>
+                      <Text style={styles.textWarning}>
+                        Nenhuma nota cadastrada
+                      </Text>
+                    </View>
+                  }
+                  
                   <FlatList
                     data={item.notas.notas}
                     style={styles.notasList}

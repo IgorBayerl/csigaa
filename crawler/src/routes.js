@@ -69,7 +69,11 @@ async function entrandoNasPaginasColetandoInformacoes(page , disciplina){
     // entrando na pagina da disciplina
     await clicandoNaDisciplina(page, disciplina)
     
-    name = 'nomeDaMateria'
+    //const name = 'nomeDaMateria' /// document.querySelector('#linkNomeTurma').textContent
+    const name = await page.evaluate(() => {
+        return String(document.querySelector('#linkNomeTurma').textContent)
+    });
+
     const presenca = await coletaPresenca( page , disciplina )
     const notas = await coletaNotas(page , disciplina)
     const noticias = []

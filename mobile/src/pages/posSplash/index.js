@@ -18,10 +18,12 @@ import Animated, {
   Extrapolate,
   sequence,
 } from 'react-native-reanimated';
-import { AntDesign,FontAwesome5 } from '@expo/vector-icons';
+import { AntDesign,FontAwesome } from '@expo/vector-icons';
 // import { TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import api from '../../services/api'
 import { FlatList } from 'react-native-gesture-handler';
+
+import{ RectButton } from 'react-native-gesture-handler'
 export default function PosSplash() {
 
   const screenWidth = Dimensions.get('window').width-20
@@ -35,6 +37,7 @@ export default function PosSplash() {
 
   async function navigateToOtherpage(){
     notas = await makeArrayNotas()
+    console.log('[array de notas]: ' + notas)
     navigate('Notas',{ notas })
   }
 
@@ -58,19 +61,22 @@ export default function PosSplash() {
   }
 
   function update(){
+    console.log('[Updating the data ...] :')
+    alert('Atualização de dados solicitada.. dentro de aproximadamente 1 minuto seus dados do sigaa estarão atualizados ...')
     requestUpdate()
+    loadData()
   }
 
   
   async function loadData(){
-    // const response = await api.post('access', {
-    //   userName:user.name,
-    //   userPassword:user.password
-    // })
-    // // console.log(JSON.parse(response.data.info))
-    // console.log('[ Carregando informações do aluno ] ...')
+    const response = await api.post('access', {
+      userName:user.name,
+      userPassword:user.password
+    })
+    // console.log(JSON.parse(response.data.info))
+    console.log('[ Carregando informações do aluno ] ...')
 
-    // setData(JSON.parse(response.data.info))
+    setData(JSON.parse(response.data.info))
   }
  
   async function makeArrayNotas(){
@@ -78,6 +84,8 @@ export default function PosSplash() {
     for (let i = 0; i < data.length; i++) {
       notas.push({
         notas: data[i].notas,
+        selected: false,
+        name: data[i].name,
         id: data[i].id
       });
     }
@@ -102,9 +110,18 @@ export default function PosSplash() {
 
   return (
     <View style={styles.container}>
+      <View style={{flexDirection: 'row',alignItems: 'center', justifyContent: 'space-between', width: '90%'}}>
       <Text style={styles.title}>
         {user.name}
       </Text>
+      <TouchableOpacity
+        onPress={ () => update()}
+      >
+        <FontAwesome name="refresh" size={24} color="white" />
+
+      </TouchableOpacity>
+
+      </View>
       <View style={styles.subContainer}>
         <View style={styles.cardContainerTop}>
           <ScrollView
@@ -136,20 +153,20 @@ export default function PosSplash() {
           </ScrollView>
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
-          <TouchableOpacity 
+          <RectButton 
             onPress={() => navigateToOtherpage()}
             style={styles.cardContainerSmall}
           >
             <Text style={styles.title}>Notas </Text>
             {/* <FontAwesome5 name="calendar-alt" size={40 } color="white" /> */}
-          </TouchableOpacity>
-          <TouchableOpacity 
+          </RectButton>
+          <RectButton 
             onPress={() => navigateToPresencas()}
             style={styles.cardContainerSmall}
           >
             <Text style={styles.title}>Presenças</Text>
             {/* <FontAwesome5 name="calendar-alt" size={40 } color="white" /> */}
-          </TouchableOpacity>
+          </RectButton>
         </View>
         <View style={styles.cardContainerBottom}>
           {/* <Text style={styles.title}>Atividades pendentes</Text> */}

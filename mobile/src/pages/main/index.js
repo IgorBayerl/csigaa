@@ -22,12 +22,12 @@ export default function Main() {
 
   function LeftActions({item}) {
     return (
-        <TouchableOpacity 
+        <RectButton 
           onPress={()=> deleteUser(item)}
           style={{ alignItems: 'center', justifyContent: 'center', marginLeft: 30, marginTop:20 }}
         >
             <Feather name="x" size={35} color="#adc2cc" />
-        </TouchableOpacity>
+        </RectButton>
     );
   }
 
@@ -146,14 +146,14 @@ export default function Main() {
           >
             <View style={styles.cardContainer}>
               
-              <TouchableOpacity
+              <RectButton
                 style={styles.card}
                 onPress={ () => navigateToOtherpage(item.userName , item.userPassword) }
               >
                 <Text style={styles.userNameTitle}>
                   {item.userName}
                 </Text>
-              </TouchableOpacity>
+              </RectButton>
             </View>
           </Swipeable>
           

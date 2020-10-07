@@ -68,7 +68,7 @@ export default StyleSheet.create({
   userNameTitle:{
     // fontWeight: 'bold',
     color: '#FFF',
-    fontSize: 28,
+    fontSize: 20,
   },
   
   cardContainerBottom:{
@@ -87,6 +87,9 @@ export default StyleSheet.create({
     paddingVertical: 10,
     alignItems: 'center'
   },
+  textWarning:{
+    color: '#d3d3d3'
+  }
   
   
 });

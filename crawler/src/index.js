@@ -14,7 +14,7 @@ app.post('/access', async (req, res) => {
     const {userName , userPassword} = req.body
     let studantData
     await connection.select('*').where({name: userName}).where({password: userPassword}).table('studants').first().then(data => {
-        console.log(data)
+        // console.log(data)
         studantData = data
     }).catch(err =>{
         console.log(err)
@@ -25,7 +25,7 @@ app.post('/access', async (req, res) => {
 
 app.post('/create', async (req, res) => {
     const body = req.body
-    console.log(body)
+    // console.log(body)
     // res.send({response:'test ok'});
 
     const name = body.userName
@@ -34,19 +34,28 @@ app.post('/create', async (req, res) => {
     
 
     let resposta
+
     await connection.select('*').where({name: name}).table('studants').then(data => {
         resposta = data
         if (resposta.length != 0){
             console.log('usuario ja existe !!!!')
             res.send({response:'Usuario ja existe'});
-            // async() => {
-            //     await connection.select('*').where({password: password}).table('studants').then(data => {
-            //         console.log(data)
-            //         studantData = data
-            //     }).catch(err =>{
-            //         console.log(err)
-            //     })
-            // }
+            async function cawlerDB(){
+                const info = JSON.stringify(await crawler.crawler(name, password))
+                const accessKey = crypto.randomBytes(6).toString('HEX')
+                try {
+                    console.log('[ updating data ]...')
+                    await connection('studants').where({name: name}).update({
+                        accessKey,
+                        name,
+                        password,
+                        info,
+                    })
+                } catch (error) {
+                    console.log('error: '+ error)
+                }
+            }
+            cawlerDB()
             
         }else{
             res.send({response:'Criando usuario'});
