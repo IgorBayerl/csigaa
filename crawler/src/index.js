@@ -38,7 +38,7 @@ app.post('/create', async (req, res) => {
     await connection.select('*').where({name: name}).table('studants').then(data => {
         resposta = data
         if (resposta.length != 0){
-            console.log('usuario ja existe !!!!')
+            console.log('[Atualizando dados do usuario]... ')
             res.send({response:'Usuario ja existe'});
             async function cawlerDB(){
                 const info = JSON.stringify(await crawler.crawler(name, password))
@@ -58,7 +58,7 @@ app.post('/create', async (req, res) => {
             cawlerDB()
             
         }else{
-            res.send({response:'Criando usuario'});
+            res.send({response:'[ Criando usuario ] ... '});
             async function cawlerDB(){
                 const info = JSON.stringify(await crawler.crawler(name, password))
                 const accessKey = crypto.randomBytes(6).toString('HEX')

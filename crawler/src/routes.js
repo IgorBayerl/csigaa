@@ -24,12 +24,18 @@ async function crawler(userLogin, userSenha) {
     console.log(`Bem vindo ${dados.name}`)
     console.log(dados.matricula)
     
-    const objGeral = await paraCadaDisciplina(page , dados)
+    const arrayMaterias = await paraCadaDisciplina(page , dados)
     
+    const objResposta = {
+        nome:dados.name,
+        matricula: dados.matricula,
+        unidade: dados.unidade,
+        arrayMaterias:arrayMaterias
+    }
     console.log('[ main ]: encerrando...')
     await browser.close();
 
-    return objGeral
+    return objResposta
 }
 
 async function openBrowser(){
