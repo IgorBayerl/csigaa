@@ -9,6 +9,7 @@ const { response } = require('express')
 app.use(express.json())
 
 
+
 app.post('/access', async (req, res) => {
 
     const {userName , userPassword} = req.body
@@ -81,6 +82,17 @@ app.post('/create', async (req, res) => {
     })
 
 })
+
+
+function antiLogOffHeroku(){
+    var intervalID = window.setInterval(checkWeatherAPI, 240000);
+
+    function checkWeatherAPI() {
+    console.log("[ Anti logoff ...]");
+    }
+}
+
+antiLogOffHeroku()
 
 app.listen(port, () => console.log(`CSIGAA api listening on port ${port}!`))
 
