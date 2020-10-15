@@ -77,10 +77,7 @@ export default function Main() {
     }
 
     if(userName != '' && userPassword != ''){
-      const adicionar = {
-        userName: userName,
-        userPassword: userPassword
-      }
+      
       tempContas.push({
         userName: userName,
         userPassword: userPassword

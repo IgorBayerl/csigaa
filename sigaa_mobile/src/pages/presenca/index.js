@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import { useRoute } from '@react-navigation/native'
 import styles from './styles'
+import{ RectButton } from 'react-native-gesture-handler'
 
 
 export default function Presenca() {
@@ -19,11 +20,22 @@ export default function Presenca() {
   
 
   const [data , setData] = useState([])
+  const [arrayPresencas , setArrayPresencas] = useState(presencas)
+
+  const [update , setUpdate] = useState([])
 
   useEffect(() => {
-    console.log(presencas.presenca)
+    console.log(presencas)
   }, []);
      
+  function expandOrContractList(item){
+    const idItem = item.id
+    let tempArrayPresencas = arrayPresencas
+    tempArrayPresencas[idItem ].selected = !arrayPresencas[idItem].selected
+    setArrayPresencas(tempArrayPresencas)
+
+    setUpdate(!update)
+  }
   
 
   return (
@@ -39,42 +51,60 @@ export default function Presenca() {
           keyExtractor={item => String(item.id)}
           renderItem={({ item: item , index: index}) => (
             <View style={styles.cardContainer}>
-              <TouchableOpacity
+              <RectButton
                 style={styles.card}
-                onPress={ () => {} }
+                onPress={ () => expandOrContractList(item) }
               >
                 <Text style={styles.userNameTitle}>
                   {item.name}
                 </Text>
-              </TouchableOpacity>
-              <View style={styles.detalhes}>
+              </RectButton>
+              {/* ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; */}
+              {item.selected ? 
+                <View style={styles.detalhes}>
                 {/* <Text style={styles.userNameTitle}>
                   Media : {item.notas.media}
                 </Text> */}
-                <View style={styles.cardDetailContainer}>
-                  <Text style={styles.userNameTitle}>
-                    Presencas
-                  </Text>
-                  
-                </View>
-                <FlatList
-                  data={item.presenca.arrayDePresencas}
-                  style={styles.notasList}
-                  showsVerticalScrollIndicator={false}
-                  keyExtractor={item => String(item.dia)}
-                  renderItem={({ item: item , index: index}) => (
-                    <View style={styles.cardDetailContainer }>
-                      <Text style={styles.userNameTitle}>
-                        {item.dia}
+                  {item.presenca.arrayDePresencas == [] ? 
+                    <View style={styles.cardDetailContainer}>
+                      {/* <Text style={styles.userNameTitle}>
+                        {`Media: ${item.notas.media}`}
                       </Text>
                       <Text style={styles.userNameTitle}>
-                        {item.situacao}
+                        {item.notas.situacao}
+                      </Text> */}
+                    </View>
+                  :
+                    <View>
+                      <Text style={styles.textWarning}>
+                        Nenhuma aula cadastrada
                       </Text>
                     </View>
-                  )}
-                />
-                
-              </View>
+                  }
+                  
+                  <FlatList
+                    data={item.presenca.arrayDePresencas}
+                    style={styles.notasList}
+                    showsVerticalScrollIndicator={false}
+                    keyExtractor={item => String(item.dia)}
+                    renderItem={({ item: item , index: index}) => (
+                      <View style={styles.cardDetailContainer }>
+                        <Text style={styles.userNameTitle}>
+                          {item.dia}
+                        </Text>
+                        <Text style={styles.userNameTitle}>
+                          {item.situacao}
+                        </Text>
+                      </View>
+                    )}
+                  />
+                </View>
+              :
+                <View/>
+              }
+
+              {/* ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;; */}
+              
             </View>
           )}
         />

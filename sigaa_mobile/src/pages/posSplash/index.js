@@ -35,10 +35,12 @@ export default function PosSplash() {
 
   async function navigateToPresencas(){
     presencas = await makeArrayPresencas()
+    console.log('[array de presenca]: ' + presencas)
     navigate('Presenca',{ presencas })
   }
 
   const [data , setData] = useState([])
+  const [extraGeralData , setExtraGeralData] = useState([])
 
   useEffect(() => {
     loadData()
@@ -65,10 +67,10 @@ export default function PosSplash() {
       userName:user.name,
       userPassword:user.password
     })
-    // console.log(JSON.parse(response.data.info))
+    console.log(JSON.parse(response.data.info).arrayMaterias)
     console.log('[ Carregando informações do aluno ] ...')
-
-    setData(JSON.parse(response.data.info))
+    setExtraGeralData(JSON.parse(response.data.info))
+    setData(JSON.parse(response.data.info).arrayMaterias)
   }
  
   async function makeArrayNotas(){
@@ -87,13 +89,20 @@ export default function PosSplash() {
 
   async function makeArrayPresencas(){
     let presencas = []
-    for (let i = 0; i < data.length; i++) {
-      console.log('alooo')
-      presencas.push({
-        presenca: data[i].presenca,
-        id: data[i].id
-      });
+    try {
+      for (let i = 0; i < data.length; i++) {
+        console.log('alooo')
+        presencas.push({
+          presenca: data[i].presenca,
+          selected: false,
+          name: data[i].name,
+          id: data[i].id
+        });
+      }
+    } catch (error) {
+      console.log(error)
     }
+    
     console.log('[ Construindo array de presencas ] ...')
     return(presencas)
   }
@@ -127,8 +136,10 @@ export default function PosSplash() {
                 paddingHorizontal: 10
               }}
             >
-              <Text style={styles.title}>Nome da materia</Text>
-              <Text style={styles.contentText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</Text>
+              <Text style={styles.title}>Informações</Text>
+              <Text style={styles.contentText}>{extraGeralData.nome}</Text>
+              <Text style={styles.contentText}>{extraGeralData.unidade}</Text>
+              <Text style={styles.contentText}>{extraGeralData.matricula}</Text>
             </View>
             <View 
               style={{
