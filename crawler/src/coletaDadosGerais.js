@@ -34,9 +34,6 @@ async function coletaDadosGerais(page){
             prasoObj.hora = String(atividade.querySelectorAll('td')[1].textContent.trim().split("								")[1].trim())
                 
             
-            
-            
-
             array_atividades.push({
                 situacao: situacaoDaAtividade,
                 disciplina: atividade.querySelectorAll('td')[2].textContent.trim().split("	")[0].trim(),
