@@ -84,15 +84,15 @@ app.post('/create', async (req, res) => {
 })
 
 
-function antiLogOffHeroku(){
-    var intervalID = window.setInterval(checkWeatherAPI, 240000);
+// function antiLogOffHeroku(){
+//     var intervalID = window.setInterval(checkWeatherAPI, 240000);
 
-    function checkWeatherAPI() {
-    console.log("[ Anti logoff ...]");
-    }
-}
+//     function checkWeatherAPI() {
+//     console.log("[ Anti logoff ...]");
+//     }
+// }
 
-antiLogOffHeroku()
+// antiLogOffHeroku()
 
 app.listen(port, () => console.log(`CSIGAA api listening on port ${port}!`))
 

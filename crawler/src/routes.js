@@ -30,7 +30,8 @@ async function crawler(userLogin, userSenha) {
         nome:dados.name,
         matricula: dados.matricula,
         unidade: dados.unidade,
-        arrayMaterias:arrayMaterias
+        arrayMaterias:arrayMaterias,
+        array_atividades: dados.array_atividades
     }
     console.log('[ main ]: encerrando...')
     await browser.close();
@@ -39,7 +40,7 @@ async function crawler(userLogin, userSenha) {
 }
 
 async function openBrowser(){
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
     await page.goto('https://sig.ifc.edu.br/sigaa/verTelaLogin.do');
     return {

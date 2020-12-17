@@ -1,5 +1,3 @@
-
-
 async function montandoObjetoDisciplina(id , notas , presenca , noticias, name){
     console.log['[Montando objeto] ...']
     const info = {
