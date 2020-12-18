@@ -70,7 +70,9 @@ async function coletaDadosGerais(page){
                 
                 prasoObj.data = String(atividade.querySelectorAll('td')[1].textContent.trim().split("								")[0].trim())
                 prasoObj.hora = String(atividade.querySelectorAll('td')[1].textContent.trim().split("								")[1].trim())
-                    
+                
+                const descriptionLength = atividade.querySelectorAll('td')[2].textContent.trim().split(":").length
+                const description = atividade.querySelectorAll('td')[2].textContent.trim().split(":")[descriptionLength - 1].replace(":","").trim()
                 
                 array_atividades_temp.push({
                     situacao: situacaoDaAtividade,
@@ -78,7 +80,8 @@ async function coletaDadosGerais(page){
                     dataDeEntrega: prasoObj.data,
                     horaDeEntrega: prasoObj.hora,
                     index: i,
-                    activated: false
+                    activated: false,
+                    description: description
                 })
             }
             return {
@@ -88,6 +91,7 @@ async function coletaDadosGerais(page){
     } catch (error) {
         console.log(`[ Coletando array de atividades ]: ${error}`)
     }
+    // console.log(array_atividades)
 
 
     
@@ -97,7 +101,7 @@ async function coletaDadosGerais(page){
         unidade: dadosGerais.unidade,
         quantidadeDeMaterias: dadosGerais.quantidadeDeMaterias,
         array_materias: array_materias,
-        array_atividades: array_atividades
+        array_atividades: array_atividades.array_atividades_temp
     }
 
     return dados

@@ -23,23 +23,24 @@ app.post('/access', async (req, res) => {
     res.json(studantData)
     
 })
-// app.get('/access', async (request, response) => {
-//     const params = request.query
 
-//     const userName = params.userName
-//     const userPassword = params.userPassword
+app.get('/access', async (request, response) => {
+    const params = request.query
+
+    const userName = params.userName
+    const userPassword = params.userPassword
 
 
-//     let studantData
-//     await connection.select('*').where({name: userName}).where({password: userPassword}).table('studants').first().then(data => {
-//         // console.log(data)
-//         studantData = data
-//     }).catch(err =>{
-//         console.log(err)
-//     })
-//     response.json(studantData)
+    let studantData
+    await connection.select('*').where({name: userName}).where({password: userPassword}).table('studants').first().then(data => {
+        // console.log(data)
+        studantData = data
+    }).catch(err =>{
+        console.log(err)
+    })
+    response.json(studantData)
 
-// })
+})
 
 app.post('/create', async (req, res) => {
     const body = req.body
@@ -101,19 +102,14 @@ app.post('/create', async (req, res) => {
 })
 
 
-function antiLogOffHeroku(){
-    var intervalID = window.setInterval(checkWeatherAPI, 240000);
+// function antiLogOffHeroku(){
+//     var intervalID = window.setInterval(checkWeatherAPI, 240000);
 
-    function checkWeatherAPI() {
-        await connection.select('*').where({name: 'igor_bayerl'}).where({password: '10012001'}).table('studants').first().then(data => {
-            console.log(".")
-        }).catch(err =>{
-            console.log(err)
-        })
-    }
-    
-}
+//     function checkWeatherAPI() {
+//     console.log("[ Anti logoff ...]");
+//     }
+// }
 
-antiLogOffHeroku()
+// antiLogOffHeroku()
 
 app.listen(port, () => console.log(`CSIGAA api listening on port ${port}!`))

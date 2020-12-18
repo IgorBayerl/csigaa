@@ -1,0 +1,679 @@
+{
+    "id": 5,
+    "accessKey": "c00cd7440b1d",
+    "name": "igor_bayerl",
+    "password": "10012001",
+    "info": {
+      "nome": "IGOR BAYERL",
+      "matricula": "2019018264",
+      "unidade": "CAMPUS SÃO BENTO DO SUL",
+      "arrayMaterias": [
+        {
+          "id": 0,
+          "name": "CÁLCULO I",
+          "notas": {
+            "quantidadeDeNotas": 0,
+            "media": null,
+            "situacao": null,
+            "notas": [
+              
+            ]
+          },
+          "presenca": {
+            "quantidadeDeLinhas": 28,
+            "allBottonText": [
+              "30",
+              "24",
+              "125",
+              "120",
+              "25"
+            ],
+            "presencasRegistradas": "30",
+            "numAulasComRegistroDeFrequencia": "24",
+            "frequenciaRelacaoAulasRegistradas": "125",
+            "numeroDeAulasDaCH": "120",
+            "presencaDaCH": "25",
+            "arrayDePresencas": [
+              {
+                "dia": "15/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "16/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "20/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "22/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "23/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "27/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "29/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "30/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "03/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "05/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "06/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "07/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "10/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "12/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "13/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "14/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "17/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "19/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "20/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "21/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "24/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "26/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "27/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "03/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "04/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "10/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "11/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "17/12/2020",
+                "situacao": "Não Registrada"
+              }
+            ]
+          },
+          "noticias": [
+            
+          ]
+        },
+        {
+          "id": 1,
+          "name": "DESENHO TÉCNICO",
+          "notas": {
+            "quantidadeDeNotas": 0,
+            "media": null,
+            "situacao": null,
+            "notas": [
+              
+            ]
+          },
+          "presenca": {
+            "quantidadeDeLinhas": 0,
+            "allBottonText": [
+              "0",
+              "0",
+              "100",
+              "80",
+              "0"
+            ],
+            "presencasRegistradas": "0",
+            "numAulasComRegistroDeFrequencia": "0",
+            "frequenciaRelacaoAulasRegistradas": "100",
+            "numeroDeAulasDaCH": "80",
+            "presencaDaCH": "0",
+            "arrayDePresencas": [
+              
+            ]
+          },
+          "noticias": [
+            
+          ]
+        },
+        {
+          "id": 2,
+          "name": "ESTRUTURA DE DADOS I",
+          "notas": {
+            "quantidadeDeNotas": 5,
+            "media": "",
+            "situacao": "--",
+            "notas": [
+              {
+                "name": "A115",
+                "nota": "9,0"
+              },
+              {
+                "name": "P125",
+                "nota": "10,0"
+              },
+              {
+                "name": "A215",
+                "nota": ""
+              },
+              {
+                "name": "P225",
+                "nota": ""
+              },
+              {
+                "name": "TF20",
+                "nota": ""
+              }
+            ]
+          },
+          "presenca": {
+            "quantidadeDeLinhas": 9,
+            "allBottonText": [
+              "24",
+              "24",
+              "100",
+              "60",
+              "40"
+            ],
+            "presencasRegistradas": "24",
+            "numAulasComRegistroDeFrequencia": "24",
+            "frequenciaRelacaoAulasRegistradas": "100",
+            "numeroDeAulasDaCH": "60",
+            "presencaDaCH": "40",
+            "arrayDePresencas": [
+              {
+                "dia": "19/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "26/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "07/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "09/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "16/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "23/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "30/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "07/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "14/12/2020",
+                "situacao": "Não Registrada"
+              }
+            ]
+          },
+          "noticias": [
+            
+          ]
+        },
+        {
+          "id": 3,
+          "name": "PROBABILIDADE E ESTATÍSTICA",
+          "notas": {
+            "quantidadeDeNotas": 0,
+            "media": null,
+            "situacao": null,
+            "notas": [
+              
+            ]
+          },
+          "presenca": {
+            "quantidadeDeLinhas": 0,
+            "allBottonText": [
+              "0",
+              "0",
+              "100",
+              "60",
+              "0"
+            ],
+            "presencasRegistradas": "0",
+            "numAulasComRegistroDeFrequencia": "0",
+            "frequenciaRelacaoAulasRegistradas": "100",
+            "numeroDeAulasDaCH": "60",
+            "presencaDaCH": "0",
+            "arrayDePresencas": [
+              
+            ]
+          },
+          "noticias": [
+            
+          ]
+        },
+        {
+          "id": 4,
+          "name": "PROGRAMAÇÃO I",
+          "notas": {
+            "quantidadeDeNotas": 0,
+            "media": null,
+            "situacao": null,
+            "notas": [
+              
+            ]
+          },
+          "presenca": {
+            "quantidadeDeLinhas": 20,
+            "allBottonText": [
+              "4",
+              "4",
+              "100",
+              "80",
+              "5"
+            ],
+            "presencasRegistradas": "4",
+            "numAulasComRegistroDeFrequencia": "4",
+            "frequenciaRelacaoAulasRegistradas": "100",
+            "numeroDeAulasDaCH": "80",
+            "presencaDaCH": "5",
+            "arrayDePresencas": [
+              {
+                "dia": "13/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "16/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "20/10/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "23/10/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "27/10/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "30/10/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "03/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "06/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "10/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "13/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "17/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "20/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "24/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "27/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "28/11/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "01/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "04/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "08/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "11/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "15/12/2020",
+                "situacao": "Não Registrada"
+              }
+            ]
+          },
+          "noticias": [
+            
+          ]
+        },
+        {
+          "id": 5,
+          "name": "REDES DE COMPUTADORES I",
+          "notas": {
+            "quantidadeDeNotas": 16,
+            "media": "",
+            "situacao": "--",
+            "notas": [
+              {
+                "name": "RSOC",
+                "nota": "10,0"
+              },
+              {
+                "name": "INTR",
+                "nota": "10,0"
+              },
+              {
+                "name": "ABRA",
+                "nota": "10,0"
+              },
+              {
+                "name": "NET1",
+                "nota": "9,1"
+              },
+              {
+                "name": "NET2",
+                "nota": "10,0"
+              },
+              {
+                "name": "NET3",
+                "nota": "8,9"
+              },
+              {
+                "name": "COMU",
+                "nota": "8,3"
+              },
+              {
+                "name": "TOPO",
+                "nota": ""
+              },
+              {
+                "name": "OSI1",
+                "nota": "10,0"
+              },
+              {
+                "name": "TCPI",
+                "nota": "9,8"
+              },
+              {
+                "name": "PT1",
+                "nota": "10,0"
+              },
+              {
+                "name": "IPv4",
+                "nota": "10,0"
+              },
+              {
+                "name": "IPv6",
+                "nota": "7,0"
+              },
+              {
+                "name": "OSI1",
+                "nota": ""
+              },
+              {
+                "name": "APLI",
+                "nota": ""
+              },
+              {
+                "name": "WEB",
+                "nota": ""
+              }
+            ]
+          },
+          "presenca": {
+            "quantidadeDeLinhas": 22,
+            "allBottonText": [
+              "40",
+              "24",
+              "166",
+              "80",
+              "50"
+            ],
+            "presencasRegistradas": "40",
+            "numAulasComRegistroDeFrequencia": "24",
+            "frequenciaRelacaoAulasRegistradas": "166",
+            "numeroDeAulasDaCH": "80",
+            "presencaDaCH": "50",
+            "arrayDePresencas": [
+              {
+                "dia": "14/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "15/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "17/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "21/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "22/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "29/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "31/10/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "04/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "05/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "11/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "12/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "18/11/2020",
+                "situacao": "3 Falta(s)"
+              },
+              {
+                "dia": "19/11/2020",
+                "situacao": "2 Falta(s)"
+              },
+              {
+                "dia": "21/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "25/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "26/11/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "02/12/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "03/12/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "09/12/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "10/12/2020",
+                "situacao": "Presente"
+              },
+              {
+                "dia": "16/12/2020",
+                "situacao": "Não Registrada"
+              },
+              {
+                "dia": "17/12/2020",
+                "situacao": "Não Registrada"
+              }
+            ]
+          },
+          "noticias": [
+            
+          ]
+        }
+      ],
+      "array_atividades": [
+        {
+          "situacao": "Expirado",
+          "disciplina": "REDES DE COMPUTADORES I",
+          "dataDeEntrega": "11/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 1,
+          "activated": false,
+          "description": "Endereçamento IPv4"
+        },
+        {
+          "situacao": "Expirado",
+          "disciplina": "REDES DE COMPUTADORES I",
+          "dataDeEntrega": "11/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 2,
+          "activated": false,
+          "description": "Cisco Packet Tracet (1)"
+        },
+        {
+          "situacao": "Expirado",
+          "disciplina": "REDES DE COMPUTADORES I",
+          "dataDeEntrega": "11/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 3,
+          "activated": false,
+          "description": "Endereçamento IPv6"
+        },
+        {
+          "situacao": "Expirado",
+          "disciplina": "ESTRUTURA DE DADOS I",
+          "dataDeEntrega": "14/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 4,
+          "activated": false,
+          "description": "Lista Encadeada Simples"
+        },
+        {
+          "situacao": "Expirado",
+          "disciplina": "CÁLCULO I",
+          "dataDeEntrega": "15/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 5,
+          "activated": false,
+          "description": "Funções - Parte 5"
+        },
+        {
+          "situacao": "Expirado",
+          "disciplina": "PROBABILIDADE E ESTATÍSTICA",
+          "dataDeEntrega": "15/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 6,
+          "activated": false,
+          "description": "Atividade 8"
+        },
+        {
+          "situacao": "NA",
+          "disciplina": "REDES DE COMPUTADORES I",
+          "dataDeEntrega": "18/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 7,
+          "activated": false,
+          "description": "Modelo OSI - Introdução"
+        },
+        {
+          "situacao": "NA",
+          "disciplina": "REDES DE COMPUTADORES I",
+          "dataDeEntrega": "18/12/2020",
+          "horaDeEntrega": "23:59",
+          "index": 8,
+          "activated": false,
+          "description": "TCP/IP - Camada de aplicação"
+        }
+      ]
+    }
+  }
