@@ -40,7 +40,7 @@ async function crawler(userLogin, userSenha) {
 }
 
 async function openBrowser(){
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const page = await browser.newPage();
     await page.goto('https://sig.ifc.edu.br/sigaa/verTelaLogin.do');
     return {

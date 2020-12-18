@@ -16,6 +16,7 @@ import api from '../../services/api'
 import { FlatList } from 'react-native-gesture-handler';
 
 import{ RectButton } from 'react-native-gesture-handler'
+import { version } from 'react/cjs/react.development';
 export default function PosSplash() {
 
   const screenWidth = Dimensions.get('window').width-20
@@ -39,7 +40,9 @@ export default function PosSplash() {
     navigate('Presenca',{ presencas })
   }
 
+  const [updateList , setUpdateList] = useState([])
   const [data , setData] = useState([])
+  const [atividades , setAtividades] = useState([])
   const [extraGeralData , setExtraGeralData] = useState([])
 
   useEffect(() => {
@@ -71,7 +74,22 @@ export default function PosSplash() {
     console.log('[ Carregando informações do aluno ] ...')
     setExtraGeralData(JSON.parse(response.data.info))
     setData(JSON.parse(response.data.info).arrayMaterias)
+    setAtividades(JSON.parse(response.data.info).array_atividades)
   }
+
+  function ativarVisualizacaoAtividade(item){
+    let arrayTemp = atividades
+
+    arrayTemp.forEach(element => {
+      element.activated = false
+    });
+
+    arrayTemp[item-1].activated = !arrayTemp[item-1].activated
+    setAtividades(arrayTemp)
+    // console.log(atividades)
+    setUpdateList(!updateList)
+  }
+
  
   async function makeArrayNotas(){
     let notas = []
@@ -176,24 +194,67 @@ export default function PosSplash() {
           
           <View style={styles.atividadesContainer}>
             <FlatList
-              data={[1,2,3,4,5,6,7,8,9,10]}
+              data={atividades}
               showsVerticalScrollIndicator={false}
               style={styles.atividadesList}
-              keyExtractor={item => String(item)}
+              extraData={updateList}
+              keyExtractor={item => String(item.index)}
               renderItem={({ item: item , index: index}) => (
-                <View style={styles.atividadesItemContainer}>
-                  <Text style={[styles.contentText,styles.atividadesItem_abreviacaoMateria]}>
+                <View style={styles.atividadesItemContainerExterno}>
+                  <RectButton 
+                    onPress={() => ativarVisualizacaoAtividade(item.index)}
+                    style={styles.atividadesItemContainer}
+                  >
+                    <View
+                    style={[styles.atividadesLeftContainer,styles.atividadesItem_nomeAtividade]}
+                    >
+                      <Text style={[styles.contentText]}>
+                        {item.disciplina}
+                      </Text>
+                      <Text 
+                        numberOfLines={1} 
+                        ellipsizeMode={'tail'}
+                        style={[styles.contentText]}
+                      >
+                        Atividado de ip de redes de computadores terceiro periodo engenharia de computacao intituto dfederal catarinense campus sao bento do sul sc
+                      </Text>
+                    </View>
+                    
+                    <Text style={[styles.contentText,styles.atividadesItem_datadeentrega]}>
+                      {item.dataDeEntrega}
+                    </Text>
+                    <Text style={[styles.contentText,styles.atividadesItem_estado]}>
+                      <AntDesign name="checkcircle" size={23} color="white" />
+                    </Text>
+                  </RectButton>
+                  {/* <Text style={[styles.contentText,styles.atividadesItem_abreviacaoMateria]}>
                     C1
-                  </Text>
-                  <Text style={[styles.contentText,styles.atividadesItem_nomeAtividade]}>
-                    Atividade teste
-                  </Text>
-                  <Text style={[styles.contentText,styles.atividadesItem_datadeentrega]}>
-                    22/10
-                  </Text>
-                  <Text style={[styles.contentText,styles.atividadesItem_estado]}>
-                    <AntDesign name="checkcircle" size={23} color="white" />
-                  </Text>
+                  </Text> */}
+                  {
+                    item.activated ? 
+                    <View style={styles.moreInfoContainer}>
+                      <View style={styles.moreInfoBox}>
+                      <View style={{flexDirection:'row',justifyContent: 'space-between', marginBottom: 5}}>
+                        <Text style={{...styles.contentText, fontWeight:'bold'}}>
+                          {item.situacao}
+                        </Text>
+                        <Text style={{...styles.contentText, fontWeight:'bold'}}>
+                          {item.horaDeEntrega}
+                        </Text>
+                      </View>
+                      <Text 
+                        numberOfLines={6} 
+                        ellipsizeMode={'tail'}
+                        style={[styles.contentText]}
+                      >
+                        Atividado de ip de redes de computadores terceiro periodo engenharia de computacao intituto dfederal catarinense campus sao bento do sul sc
+                      </Text>
+                      </View>
+                    </View>
+                    :
+                    <View/>
+                  }
+                  
                 </View>
               )}
             />

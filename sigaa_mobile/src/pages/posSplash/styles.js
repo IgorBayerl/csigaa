@@ -132,31 +132,52 @@ export default StyleSheet.create({
     flexDirection: 'row', 
     // justifyContent: 'space-between',
     height: 50,
-    marginVertical: 5,
+    marginVertical: 10,
     alignItems: 'center'
+  },
+  atividadesItemContainerExterno:{
+    // backgroundColor: '#de2424',
+    justifyContent: 'center',
+    // height: 50,
+    marginVertical: 10,
+    alignItems: 'center',
+    // paddingLeft: 5
   },
   atividadesItem_nomeAtividade: {
     fontWeight: "bold",
     // backgroundColor: '#de2424',
-    width: '65%'
+    width: '70%'
   },
   contentText:{
     color: 'white',
-    fontSize: 15
+    fontSize: 15,
+    marginLeft:5
   },
-  atividadesItem_abreviacaoMateria:{
-    // backgroundColor: 'blue',
-    width: '10%'
+  moreInfoContainer:{
+    width: '100%'
   },
+  moreInfoBox:{
+    width: '100%',
+    // height: 90,
+    backgroundColor: theme.background,
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical:10
+  },
+  // atividadesItem_abreviacaoMateria:{
+  //   // backgroundColor: 'blue',
+  //   width: '10%'
+  // },
   atividadesItem_estado:{
     
     // backgroundColor: '#de2424',
-    width: '10%'
+    width: '10%',
+    marginLeft: 5
   },
   atividadesItem_datadeentrega:{
-    
+    fontSize: 12,
     // backgroundColor: 'blue',
-    width: '15%'
+    width: '20%'
   }
   
 });

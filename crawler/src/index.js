@@ -24,6 +24,24 @@ app.post('/access', async (req, res) => {
     
 })
 
+app.get('/access', async (request, response) => {
+    const params = request.query
+
+    const userName = params.userName
+    const userPassword = params.userPassword
+
+
+    let studantData
+    await connection.select('*').where({name: userName}).where({password: userPassword}).table('studants').first().then(data => {
+        // console.log(data)
+        studantData = data
+    }).catch(err =>{
+        console.log(err)
+    })
+    response.json(studantData)
+
+})
+
 app.post('/create', async (req, res) => {
     const body = req.body
     // console.log(body)
