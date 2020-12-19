@@ -63,18 +63,18 @@ export default function Notas() {
                   Media : {item.notas.media}
                 </Text> */}
                   {item.notas.notas == [] ? 
+                    <View>
+                      <Text style={styles.textWarning}>
+                        Nenhuma nota cadastrada
+                      </Text>
+                    </View>
+                  :
                     <View style={styles.cardDetailContainer}>
                       <Text style={styles.userNameTitle}>
                         {`Media: ${item.notas.media}`}
                       </Text>
                       <Text style={styles.userNameTitle}>
                         {item.notas.situacao}
-                      </Text>
-                    </View>
-                  :
-                    <View>
-                      <Text style={styles.textWarning}>
-                        Nenhuma nota cadastrada
                       </Text>
                     </View>
                   }

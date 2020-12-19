@@ -5,8 +5,12 @@ import {
   View, 
   TouchableOpacity ,
   Dimensions,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from 'react-native';
+
+
+import AsyncStorage from '@react-native-community/async-storage'
 import { useRoute, useNavigation } from '@react-navigation/native'
 import styles from './styles'
 
@@ -30,13 +34,13 @@ export default function PosSplash() {
 
   async function navigateToOtherpage(){
     notas = await makeArrayNotas()
-    console.log('[array de notas]: ' + notas)
+    // console.log('[array de notas]: ' + notas)
     navigate('Notas',{ notas })
   }
 
   async function navigateToPresencas(){
     presencas = await makeArrayPresencas()
-    console.log('[array de presenca]: ' + presencas)
+    // console.log('[array de presenca]: ' + presencas)
     navigate('Presenca',{ presencas })
   }
 
@@ -44,37 +48,68 @@ export default function PosSplash() {
   const [data , setData] = useState([])
   const [atividades , setAtividades] = useState([])
   const [extraGeralData , setExtraGeralData] = useState([])
+  const [isLoading , setIsLoading] = useState(true)
 
   useEffect(() => {
+    
     loadData()
   }, []);
      
   async function requestUpdate(){
-    console.log(user)
+    // console.log(user)
     await api.post('create', {
       userName:user.name,
       userPassword:user.password
     })
   }
 
-  function update(){
+  async function updateUserInformation(){
+    
     console.log('[Updating the data ...] :')
     alert('Atualização de dados solicitada.. dentro de aproximadamente 1 minuto seus dados do sigaa estarão atualizados ...')
+    
     requestUpdate()
     loadData()
   }
 
+  async function loadOldData(){
+    const oldData = await AsyncStorage.getItem('@SCIGAA_oldData')
+    if(oldData){
+
+      // console.log(JSON.parse(oldData.data.info).arrayMaterias)
+      console.log('[ Carregando informações antigas do aluno ] ...')
+      setExtraGeralData(JSON.parse(oldData.info))
+      setData(JSON.parse(oldData.info).arrayMaterias)
+      setAtividades(JSON.parse(oldData.info).array_atividades)
+      setIsLoading(false)
+    }
+
+  }
   
   async function loadData(){
-    const response = await api.post('access', {
-      userName:user.name,
-      userPassword:user.password
-    })
-    console.log(JSON.parse(response.data.info).arrayMaterias)
-    console.log('[ Carregando informações do aluno ] ...')
-    setExtraGeralData(JSON.parse(response.data.info))
-    setData(JSON.parse(response.data.info).arrayMaterias)
-    setAtividades(JSON.parse(response.data.info).array_atividades)
+    // const response = await api.post('access', {
+    //   userName:user.name,
+    //   userPassword:user.password
+    // })
+    try {
+      const response = await api.get(`access?userName=${user.name}&userPassword=${user.password}`)
+      // console.log(JSON.parse(response.data.info).arrayMaterias)
+      console.log('[ Carregando informações do aluno ] ...')
+      setExtraGeralData(JSON.parse(response.data.info))
+      setData(JSON.parse(response.data.info).arrayMaterias)
+      setAtividades(JSON.parse(response.data.info).array_atividades)
+
+      await AsyncStorage.setItem('@SCIGAA_acounts', JSON.stringify(response.data))
+      console.log('[Salvando informações localmente]...')
+      setIsLoading(false)
+    } catch (error) {
+      if(error){
+        console.log(error)
+        alert('Erro ao coletar informações do servidor.')
+        loadOldData()
+      }
+    }
+    
   }
 
   function ativarVisualizacaoAtividade(item){
@@ -134,7 +169,7 @@ export default function PosSplash() {
         {user.name}
       </Text>
       <TouchableOpacity
-        onPress={ () => update()}
+        onPress={ () => updateUserInformation()}
       >
         <FontAwesome name="refresh" size={24} color="white" />
 
@@ -143,35 +178,42 @@ export default function PosSplash() {
       </View>
       <View style={styles.subContainer}>
         <View style={styles.cardContainerTop}>
-          <ScrollView
-            horizontal={true}
-            pagingEnabled={true}
-            
-          >
-            <View 
-              style={{
-                width : screenWidth,
-                paddingHorizontal: 10
-              }}
+          {
+            isLoading
+            ?
+            <ActivityIndicator style={styles.activityIndicatorCenter} size='large' color="#fff" />
+            :
+            <ScrollView
+              horizontal={true}
+              pagingEnabled={true}
+              
             >
-              <Text style={styles.title}>Informações</Text>
-              <Text style={styles.contentText}>{extraGeralData.nome}</Text>
-              <Text style={styles.contentText}>{extraGeralData.unidade}</Text>
-              <Text style={styles.contentText}>{extraGeralData.matricula}</Text>
-            </View>
-            <View 
-              style={{
-                width : screenWidth,
-                paddingHorizontal: 10
-              }}
-            >
-              <Text style={styles.title}>Noticias</Text>
-              <Text style={styles.contentText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</Text>
-            </View>
-            
-      
+              <View 
+                style={{
+                  width : screenWidth,
+                  paddingHorizontal: 10
+                }}
+              >
+                <Text style={styles.title}>Informações</Text>
+                <Text style={styles.contentText}>{extraGeralData.nome}</Text>
+                <Text style={styles.contentText}>{extraGeralData.unidade}</Text>
+                <Text style={styles.contentText}>{extraGeralData.matricula}</Text>
+              </View>
+              <View 
+                style={{
+                  width : screenWidth,
+                  paddingHorizontal: 10
+                }}
+              >
+                <Text style={styles.title}>Noticias</Text>
+                <Text style={styles.contentText}>Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley.</Text>
+              </View>
+              
+        
 
-          </ScrollView>
+            </ScrollView>
+          }
+          
         </View>
         <View style={{flexDirection: 'row', justifyContent: 'space-between', width: '100%'}}>
           <RectButton 
@@ -193,6 +235,11 @@ export default function PosSplash() {
           {/* <Text style={styles.title}>Atividades pendentes</Text> */}
           
           <View style={styles.atividadesContainer}>
+            {
+            isLoading 
+            ? 
+            <ActivityIndicator style={styles.activityIndicatorCenter} size='large' color="#fff" />
+            :
             <FlatList
               data={atividades}
               showsVerticalScrollIndicator={false}
@@ -216,7 +263,7 @@ export default function PosSplash() {
                         ellipsizeMode={'tail'}
                         style={[styles.contentText]}
                       >
-                        Atividado de ip de redes de computadores terceiro periodo engenharia de computacao intituto dfederal catarinense campus sao bento do sul sc
+                        {item.description}
                       </Text>
                     </View>
                     
@@ -224,7 +271,7 @@ export default function PosSplash() {
                       {item.dataDeEntrega}
                     </Text>
                     <Text style={[styles.contentText,styles.atividadesItem_estado]}>
-                      <AntDesign name="checkcircle" size={23} color="white" />
+                      <AntDesign name="checkcircle" size={23} color={item.situacao == "Expirado" ?"#999999":"white"} />
                     </Text>
                   </RectButton>
                   {/* <Text style={[styles.contentText,styles.atividadesItem_abreviacaoMateria]}>
@@ -247,7 +294,7 @@ export default function PosSplash() {
                         ellipsizeMode={'tail'}
                         style={[styles.contentText]}
                       >
-                        Atividado de ip de redes de computadores terceiro periodo engenharia de computacao intituto dfederal catarinense campus sao bento do sul sc
+                        {item.description}
                       </Text>
                       </View>
                     </View>
@@ -258,6 +305,8 @@ export default function PosSplash() {
                 </View>
               )}
             />
+            }
+            
           </View>
         </View>
       </View>

@@ -168,6 +168,9 @@ export default StyleSheet.create({
   //   // backgroundColor: 'blue',
   //   width: '10%'
   // },
+  activityIndicatorCenter:{
+    height:'100%',
+  },
   atividadesItem_estado:{
     
     // backgroundColor: '#de2424',

@@ -38,7 +38,12 @@ app.get('/access', async (request, response) => {
     }).catch(err =>{
         console.log(err)
     })
-    response.json(studantData)
+    if(!studantData){
+        crawler.crawler(userName, userPassword)
+        response.json('newUser')
+    }else{
+        response.json(studantData)
+    }
 
 })
 
@@ -103,10 +108,26 @@ app.post('/create', async (req, res) => {
 
 
 // function antiLogOffHeroku(){
-//     var intervalID = window.setInterval(checkWeatherAPI, 240000);
 
-//     function checkWeatherAPI() {
-//     console.log("[ Anti logoff ...]");
+//     window.setInterval(function() {
+//         doNotSleeeeep();
+//     }, 240000);
+
+
+//     async function doNotSleeeeep() {
+//         let teste
+//         await connection.select('*').where({name: teste}).where({password: teste}).table('studants').first().then(data => {
+//             // console.log(data)
+//             teste = data
+//         }).catch(err =>{
+//             console.log(err)
+//         })
+//         if(teste){
+//             console.log('[ Anti sleep ...] testado ok')
+//         }else{
+//             console.log('[ Anti sleep ...] testado n ok')
+//         }
+//         console.log("[ Anti sleep ...]");
 //     }
 // }
 

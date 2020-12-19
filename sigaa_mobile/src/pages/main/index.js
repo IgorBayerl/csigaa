@@ -7,8 +7,9 @@ import { Text,
    Alert,
    TextInput ,
    Platform,
-   AsyncStorage
   } from 'react-native';
+
+import AsyncStorage from '@react-native-community/async-storage'
 import { RectButton } from 'react-native-gesture-handler'
 import styles from './styles'
 
@@ -52,7 +53,7 @@ export default function Main() {
   const [contas, setContas] = useState([]);   
 
   async function loadData(){
-    const acounts = await AsyncStorage.getItem('@SCIGAA_acounts')
+    const acounts = await AsyncStorage.getItem('@SCIGAA_acount')
     setContas(JSON.parse(acounts))
   }
 
@@ -60,7 +61,7 @@ export default function Main() {
     contas.splice(index, 1)
     setUpdate(!update)
     try {
-      await AsyncStorage.setItem('@SCIGAA_acounts', JSON.stringify(contas))
+      await AsyncStorage.setItem('@SCIGAA_acount', JSON.stringify(contas))
       console.log('removido')
     } catch (e) {
       console.log(e)
@@ -87,7 +88,7 @@ export default function Main() {
       setUserPassword('')
       setUpdate(!update)
       try {
-        await AsyncStorage.setItem('@SCIGAA_acounts', JSON.stringify(contas))
+        await AsyncStorage.setItem('@SCIGAA_acount', JSON.stringify(contas))
         console.log('adicionado')
       } catch (e) {
         console.log(e)
@@ -126,7 +127,7 @@ export default function Main() {
           
           <TouchableOpacity
             style={styles.okButton}
-            onPress={() => addButtonPressed() }
+            onPress={async () => await addButtonPressed() }
           >
               <Feather name="check" size={35} color="#adc2cc" />
           </TouchableOpacity>
