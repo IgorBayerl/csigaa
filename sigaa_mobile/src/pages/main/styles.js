@@ -52,7 +52,9 @@ export default StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     marginTop: 10,
-    width:'100%'
+    width:'100%',
+    flexDirection: 'row',
+    paddingHorizontal:30
   },
   lastCard:{
     backgroundColor: theme.color_card,

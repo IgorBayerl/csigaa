@@ -16,7 +16,9 @@ async function crawler(userLogin, userSenha) {
     const browser = init.browser
     
     await login(page, userLogin, userSenha);
-   
+    
+
+
     await page.waitForNavigation();
 
     const dados = await coletaDadosGerais(page)
@@ -42,7 +44,7 @@ async function crawler(userLogin, userSenha) {
 async function openBrowser(){
     const browser = await puppeteer.launch({ 
         headless: true,
-        args: ["--no-sandbox"]
+        args: ["--no-sandbox", "--disable-setuid-sandbox"]
     });
     const page = await browser.newPage();
     await page.goto('https://sig.ifc.edu.br/sigaa/verTelaLogin.do');

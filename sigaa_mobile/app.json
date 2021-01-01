@@ -2,7 +2,7 @@
   "expo": {
     "name": "SIGAA Mobile",
     "slug": "sigaa_mobile",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
     "splash": {
@@ -23,6 +23,8 @@
       "favicon": "./assets/favicon.png"
     },
     "android": {
+      "useNextNotificationsApi": true,
+      "googleServicesFile": "./google-services.json",
       "package": "com.igor_bayerl.sigaa_mobile"
     }
   }

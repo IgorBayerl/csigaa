@@ -29,6 +29,7 @@ export default function PosSplash() {
   const route = useRoute()
 
   const user = route.params.userInfo
+  const isNewUser = route.params.isNewUser
 
   const { navigate } = useNavigation()
 
@@ -51,27 +52,14 @@ export default function PosSplash() {
   const [isLoading , setIsLoading] = useState(true)
 
   useEffect(() => {
-    
-    loadData()
+    requestUserData(user.name , user.password)
+    console.log(isNewUser)
+    if(isNewUser){
+      alert('A primeira vez que você faz login neste serviço temos que terminar seu cadastro no nosso sistema .. Isso leva alguns instantes .. Volte daqui alguns minutinhos.')
+
+    }
   }, []);
      
-  async function requestUpdate(){
-    // console.log(user)
-    await api.post('create', {
-      userName:user.name,
-      userPassword:user.password
-    })
-  }
-
-  async function updateUserInformation(){
-    
-    console.log('[Updating the data ...] :')
-    alert('Atualização de dados solicitada.. dentro de aproximadamente 1 minuto seus dados do sigaa estarão atualizados ...')
-    
-    requestUpdate()
-    loadData()
-  }
-
   async function loadOldData(){
     const oldData = await AsyncStorage.getItem('@SCIGAA_oldData')
     if(oldData){
@@ -85,15 +73,11 @@ export default function PosSplash() {
     }
 
   }
-  
-  async function loadData(){
-    // const response = await api.post('access', {
-    //   userName:user.name,
-    //   userPassword:user.password
-    // })
+
+  async function requestUserData(userName, userPassword){
     try {
-      const response = await api.get(`access?userName=${user.name}&userPassword=${user.password}`)
-      // console.log(JSON.parse(response.data.info).arrayMaterias)
+      const response = await api.get(`access?userName=${userName}&userPassword=${userPassword}`)
+
       console.log('[ Carregando informações do aluno ] ...')
       setExtraGeralData(JSON.parse(response.data.info))
       setData(JSON.parse(response.data.info).arrayMaterias)
@@ -110,7 +94,9 @@ export default function PosSplash() {
       }
     }
     
+    
   }
+
 
   function ativarVisualizacaoAtividade(item){
     let arrayTemp = atividades
@@ -168,12 +154,6 @@ export default function PosSplash() {
       <Text style={styles.title}>
         {user.name}
       </Text>
-      <TouchableOpacity
-        onPress={ () => updateUserInformation()}
-      >
-        <FontAwesome name="refresh" size={24} color="white" />
-
-      </TouchableOpacity>
 
       </View>
       <View style={styles.subContainer}>

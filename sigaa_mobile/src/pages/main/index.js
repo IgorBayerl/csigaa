@@ -7,17 +7,22 @@ import { Text,
    Alert,
    TextInput ,
    Platform,
+   ActivityIndicator
   } from 'react-native';
 
 import AsyncStorage from '@react-native-community/async-storage'
 import { RectButton } from 'react-native-gesture-handler'
 import styles from './styles'
 
+import api from '../../services/api'
+
+
+
 import { useNavigation } from '@react-navigation/native';
 import { Feather } from '@expo/vector-icons';
 import Swipeable from 'react-native-gesture-handler/Swipeable';
-
-
+const FormData = require('form-data');
+import StatusIndicator from '../../components/statusIndicator'
 
 export default function Main() {
 
@@ -32,25 +37,32 @@ export default function Main() {
     );
   }
 
+
+
   const [userName, setUserName] = useState('');
   const [userPassword, setUserPassword] = useState('');
   const [update, setUpdate] = useState(false);
+  const [loading, setLoading] = useState('disable');
+  const [contas, setContas] = useState([]);
+  const [isNewUser, setIsNewUser] = useState(false);
 
   const { navigate } = useNavigation()
 
-  function navigateToOtherpage(userName , userPassword){
+  function navigateToOtherpage(userName , userPassword, isNewUser){
     const userInfo = {
       name: userName,
       password: userPassword
     }
-    navigate('PosSplash',{ userInfo })
+    
+    navigate('PosSplash',{ userInfo , isNewUser })
+    setIsNewUser(false)
   }
 
   useEffect(() => {
     loadData()
   }, []);
   
-  const [contas, setContas] = useState([]);   
+    
 
   async function loadData(){
     const acounts = await AsyncStorage.getItem('@SCIGAA_acount')
@@ -68,36 +80,134 @@ export default function Main() {
     }
   }
 
+  async function valudatingUserLogin(userLogin, userSenha){
+    console.log(`Verificando login de ${userLogin}`)
+    
+    let formData = new FormData();
+    
+    formData.append('user.login', userLogin);
+    formData.append('user.senha', userSenha);
 
-  async function addButtonPressed(){
-    let tempContas
-    if (contas != null){
-      tempContas = contas
-    }else{
-      tempContas = []
+    const options = {
+        method: 'POST',
+        body: formData,
     }
 
-    if(userName != '' && userPassword != ''){
-      
-      tempContas.push({
+    console.log(formData)
+
+    const serverSigaaLoginResponse = await fetch('https://sig.ifc.edu.br/sigaa/logar.do?dispatch=logOn', options);
+    const content = await serverSigaaLoginResponse.text()
+    const position = content.indexOf('<a class="perfil" href="perfil.jsf">')
+    
+    // console.log(content.length)
+    console.log(`Position = ${position}`)
+
+    if(position != -1){
+        console.log(true)
+        return true
+    }else{
+        console.log(false)
+        return false
+    }
+  }
+
+
+  async function addButtonPressed(){
+
+    if(userName == '' || userPassword == ''){
+      alert('Preencha todos os campos com o nome de usuário e a sua senha do sigaa!')
+    }else{
+
+      let tempContas
+      if (contas != null){
+        tempContas = contas
+      }else{
+        tempContas = []
+      }
+
+      // -1 - Error
+      // 0  - Loading
+      // 1  - OK
+      const pushOBJ = {
         userName: userName,
-        userPassword: userPassword
-      })
+        userPassword: userPassword,
+        status: 0
+      }
+      tempContas.push(pushOBJ)
       setContas(tempContas)
       setUserName('')
       setUserPassword('')
       setUpdate(!update)
-      try {
-        await AsyncStorage.setItem('@SCIGAA_acount', JSON.stringify(contas))
-        console.log('adicionado')
-      } catch (e) {
-        console.log(e)
-      }
 
-    }else{
-      alert('preencha o nome de usuário e a sua senha do sigaa!')
+      // const validated = await api.get(`verify?userName=${userName}&userPassword=${userPassword}`)
+      const validated = await valudatingUserLogin( userName , userPassword )
+      console.log(`alooooo`)
+      if(validated == true){
+        console.log(`Usuario e senha corretos!!`)
+        
+        let tempContas = contas
+        const userIndex = tempContas.indexOf(pushOBJ)
+        // console.log(userIndex)
+        
+        tempContas[userIndex].status = 1
+        // console.log(`CONTAS == ${JSON.stringify(tempContas)}`)
+        setContas(tempContas)
+        setUpdate(!update)
+        setLoading(!loading)
+
+        try {
+          await AsyncStorage.setItem('@SCIGAA_acount', JSON.stringify(contas))
+          console.log('adicionado')
+        } catch (e) {
+          console.log(e)
+        }
+
+        try {
+          const expoToken = await AsyncStorage.getItem('@SIGAA_expoToken');
+          const response = await api.post('create_user', {
+              userName:userName,
+              userPassword:userPassword,
+              degree:"bacharel",
+              expoToken:expoToken,
+              notifications: true
+          })
+
+          if(response == "Usuario ja existe"){
+            setIsNewUser(false)
+          }else{
+            setIsNewUser(true)
+          }
+
+        } catch (error) {
+          console.log(error)
+        }
+
+        
+      }else{
+        console.log(`Usuario e senha incorretos!!`)
+        alert(`Usuario e senha incorretos!!`)
+        
+        let tempContas = contas
+        const userIndex = tempContas.indexOf(pushOBJ)
+        // console.log(`User index of = ${userIndex}`)
+
+        tempContas[userIndex].status = -1
+
+        // console.log(`CONTAS == ${JSON.stringify(tempContas)}`)
+        setContas(tempContas)
+        setUpdate(!update)
+        setLoading(!loading)
+        deleteUser(userIndex)
+
+      }
+      
+      
+
     }
+
   }
+
+  function sleep(ms) {return new Promise((resolve) => {setTimeout(resolve, ms)})}
   
   return (
     <View style={styles.container}>
@@ -136,7 +246,7 @@ export default function Main() {
       </View>
       <FlatList
         data={contas}
-        extraData={update}
+        extraData={[update,loading]}
         style={styles.usersList}
         keyExtractor={item => String(item.userName)}
         renderItem={({ item: item , index: index}) => (
@@ -145,14 +255,43 @@ export default function Main() {
           >
             <View style={styles.cardContainer}>
               
+              {item.status == 1 ?
               <RectButton
+                style={styles.card}
+                onPress={ () => navigateToOtherpage(item.userName , item.userPassword, isNewUser) }
+              >
+                <Text style={styles.userNameTitle}>
+                  {item.userName}
+                </Text>
+              </RectButton>
+              :
+                item.status == -1 
+                ? 
+                <View style={styles.card}>
+                  <Text style={{...styles.userNameTitle,color:'#de2424'}}>
+                    {item.userName}
+                  </Text>
+                </View>
+
+                :
+               
+                <View style={styles.card}>
+                  {/* <Text style={styles.userNameTitle}>
+                    {item.userName}
+                  </Text> */}
+                  <ActivityIndicator size="large" color="#FFF" />
+                </View>
+              }
+              
+              {/* <RectButton
                 style={styles.card}
                 onPress={ () => navigateToOtherpage(item.userName , item.userPassword) }
               >
                 <Text style={styles.userNameTitle}>
                   {item.userName}
                 </Text>
-              </RectButton>
+                <StatusIndicator status={item.status}/>
+              </RectButton> */}
             </View>
           </Swipeable>
           
@@ -162,3 +301,4 @@ export default function Main() {
     </View>
   );
 }
+
